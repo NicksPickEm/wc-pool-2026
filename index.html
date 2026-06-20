@@ -21,6 +21,8 @@
   --red-bg:     #d8c0c0;
   --neutral:    #565d62;
   --neutral-bg: #c4c8cb;
+  --amber:      #8a6a1a;
+  --amber-bg:   #d8c98a;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
@@ -110,6 +112,7 @@ body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--te
 .badge { width: 26px; height: 26px; border-radius: 50%; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .badge.correct { background: var(--green-bg); color: var(--green); border: 1px solid var(--green); }
 .badge.wrong   { background: var(--red-bg);   color: var(--red);   border: 1px solid var(--red); }
+.badge.partial { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber); }
 .badge.pending { background: var(--neutral-bg); color: var(--neutral); border: 1px solid var(--neutral); }
 
 .legend { display: flex; gap: 14px; margin-top: 12px; font-size: 11px; color: var(--muted); flex-wrap: wrap; }
@@ -260,13 +263,13 @@ const GROUPS = {
       {home:'🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland',away:'🇧🇷 Brazil',score:null,date:'Wed, Jun 24',time:'6:00 PM ET',tv:'FOX'},
       {home:'🇲🇦 Morocco',away:'🇭🇹 Haiti',score:null,date:'Wed, Jun 24',time:'6:00 PM ET',tv:'FS1'},
     ]},
-  D:{teams:['🇺🇸 USA','🇹🇷 Turkey','🇦🇺 Australia','🇵🇾 Paraguay'],result:null,
-    table:[{team:'🇺🇸 USA',p:2,w:2,d:0,l:0,gf:6,ga:1,gd:+5,pts:6},{team:'🇦🇺 Australia',p:2,w:1,d:0,l:1,gf:2,ga:2,gd:0,pts:3},{team:'🇹🇷 Turkey',p:1,w:0,d:0,l:1,gf:0,ga:2,gd:-2,pts:0},{team:'🇵🇾 Paraguay',p:1,w:0,d:0,l:1,gf:1,ga:4,gd:-3,pts:0}],
+  D:{teams:['🇺🇸 USA','🇹🇷 Turkey','🇦🇺 Australia','🇵🇾 Paraguay'],result:[1,4,null,null],
+    table:[{team:'🇺🇸 USA',p:2,w:2,d:0,l:0,gf:6,ga:1,gd:+5,pts:6},{team:'🇦🇺 Australia',p:2,w:1,d:0,l:1,gf:2,ga:2,gd:0,pts:3},{team:'🇵🇾 Paraguay',p:2,w:1,d:0,l:1,gf:2,ga:4,gd:-2,pts:3},{team:'🇹🇷 Turkey',p:2,w:0,d:0,l:2,gf:0,ga:3,gd:-3,pts:0}],
     matches:[
       {home:'🇺🇸 USA',away:'🇵🇾 Paraguay',score:'4-1',date:'Fri, Jun 12',time:'9:00 PM ET',tv:'FOX'},
       {home:'🇦🇺 Australia',away:'🇹🇷 Turkey',score:'2-0',date:'Sat, Jun 13',time:'12:00 AM ET',tv:'FS1'},
       {home:'🇺🇸 USA',away:'🇦🇺 Australia',score:'2-0',date:'Fri, Jun 19',time:'3:00 PM ET',tv:'FOX'},
-      {home:'🇹🇷 Turkey',away:'🇵🇾 Paraguay',score:null,date:'Fri, Jun 19',time:'12:00 AM ET',tv:'FS1'},
+      {home:'🇹🇷 Turkey',away:'🇵🇾 Paraguay',score:'0-1',date:'Fri, Jun 19',time:'12:00 AM ET',tv:'FS1'},
       {home:'🇹🇷 Turkey',away:'🇺🇸 USA',score:null,date:'Thu, Jun 25',time:'10:00 PM ET',tv:'FOX'},
       {home:'🇵🇾 Paraguay',away:'🇦🇺 Australia',score:null,date:'Thu, Jun 25',time:'10:00 PM ET',tv:'FS1'},
     ]},
@@ -403,7 +406,15 @@ function playerGroupPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcGroupP
 function playerBonusPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcBonusPts(p.picks[g],GROUPS[g].result),0);}
 function totalPts(p){return playerGroupPts(p)+playerBonusPts(p)+calcThirdPts(p);}
 function sortedPlayers(){return [...PLAYERS].sort((a,b)=>totalPts(b)-totalPts(a));}
-function badgeClass(pick,actual){if(actual===null||actual===undefined)return 'pending';return pick===actual?'correct':'wrong';}
+function badgeClass(pick,actual,teamName){
+  if(actual===null||actual===undefined)return 'pending';
+  if(pick===actual)return 'correct';
+  // Yellow cases: pick=1 and actual finished 2nd (5pts); pick=2 and actual finished 1st (5pts); pick=2 and actual finished 3rd-and-advanced (2pts)
+  if(pick===1 && actual===2) return 'partial';
+  if(pick===2 && actual===1) return 'partial';
+  if(pick===2 && actual===3 && teamName && ADVANCING_3RD.includes(teamName)) return 'partial';
+  return 'wrong';
+}
 
 function matchBlock(m) {
   const done=!!m.score;
@@ -481,7 +492,8 @@ function openSheet(g){
     html+=`<tr><td class="player-td">${p.name}</td>`;
     p.picks[g].forEach((pick,i)=>{
       const actual=hasAnyResult?grp.result[i]:null;
-      html+=`<td><div class="badge ${badgeClass(pick,actual)}">${pick}</div></td>`;
+      const tname=countryName(grp.teams[i]);
+      html+=`<td><div class="badge ${badgeClass(pick,actual,tname)}">${pick}</div></td>`;
     });
     if(hasAnyResult)html+=`<td style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--accent)">${pts}</td>`;
     html+=`</tr>`;
@@ -489,8 +501,9 @@ function openSheet(g){
   html+=`</tbody></table>
   <div class="legend">
     <span><span class="legend-dot" style="background:var(--green)"></span>Correct</span>
+    <span><span class="legend-dot" style="background:var(--amber)"></span>Wrong, still points</span>
     <span><span class="legend-dot" style="background:var(--red)"></span>Wrong</span>
-    ${!done?'<span><span class="legend-dot" style="background:var(--neutral)"></span>Pending</span>':''}
+    ${!done?'<span><span class="legend-dot" style="background:var(--neutral-bg);border:1px solid var(--border)"></span>Pending</span>':''}
   </div>`;
   document.getElementById('sheet-body').innerHTML=html;
   document.getElementById('sheet-bg').classList.add('open');
@@ -620,9 +633,10 @@ function renderPlayerDetail(){
         html+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:3px 0;border-bottom:1px solid var(--border)">
           <span style="font-size:11px;color:var(--text)">${teamName(row.team)}</span>
           <div style="display:flex;gap:4px">`;
+        const tname=countryName(row.team);
         comparePlayers.forEach(p=>{
           const pick=p.picks[g][teamIdx];
-          html+=`<div class="badge ${badgeClass(pick,actual)}" style="width:22px;height:22px;font-size:10px">${pick}</div>`;
+          html+=`<div class="badge ${badgeClass(pick,actual,tname)}" style="width:22px;height:22px;font-size:10px">${pick}</div>`;
         });
         html+=`</div></div>`;
       });
@@ -647,7 +661,8 @@ function renderPlayerDetail(){
       const sortedPicks=[...p1.picks[g].map((pick,i)=>({pick,i}))].sort((a,b)=>a.pick-b.pick);
       sortedPicks.forEach(({pick,i})=>{
         const actual=hasAnyResult?grp.result[i]:null;
-        html+=`<div class="player-pick"><div class="badge ${badgeClass(pick,actual)}">${pick}</div>${teamName(grp.teams[i])}</div>`;
+        const tname=countryName(grp.teams[i]);
+        html+=`<div class="player-pick"><div class="badge ${badgeClass(pick,actual,tname)}">${pick}</div>${teamName(grp.teams[i])}</div>`;
       });
       html+=`</div>
         </div>
