@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<style>html { color-scheme: light only; }</style>
 <title>WC Pool 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -25,7 +27,9 @@
   --amber-bg:   #d8c98a;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+body { font-family: 'Barlow', sans-serif; background: var(--bg) !important; color: var(--text) !important; min-height: 100vh; }
+html { background: var(--bg) !important; }
+.view { background: var(--bg) !important; }
 
 .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 16px 0; position: sticky; top: 0; z-index: 50; }
 .header-top { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
@@ -148,6 +152,9 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 .bd-row.bd-open { background: var(--amber-bg); color: var(--amber); }
 .bd-label { flex: 1; }
 .bd-pts { font-weight: 700; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; margin-left: 8px; }
+.bd-icon { font-family: Arial, sans-serif; font-weight: 900; margin-left: 2px; }
+.bd-icon-hit { color: #1a4d20; }
+.bd-icon-miss { color: #6b1414; }
 .mini-standings { width: 100%; border-collapse: collapse; font-size: 10px; }
 .mini-standings th { font-size: 8px; font-weight: 600; color: var(--muted); padding: 2px 3px; text-align: center; border-bottom: 1px solid var(--border); }
 .mini-standings td { padding: 3px 3px; text-align: center; border-bottom: 1px solid var(--border); font-size: 10px; color: var(--text); }
@@ -303,7 +310,7 @@ const GROUPS = {
       {home:'🇹🇳 Tunisia',away:'🇳🇱 Netherlands',score:null,date:'Thu, Jun 25',time:'7:00 PM ET',tv:'FS1'},
     ]},
   G:{teams:['🇧🇪 Belgium','🇪🇬 Egypt','🇮🇷 Iran','🇳🇿 New Zealand'],result:null,
-    table:[{team:'🇧🇪 Belgium',p:1,w:0,d:1,l:0,gf:1,ga:1,gd:0,pts:1},{team:'🇪🇬 Egypt',p:1,w:0,d:1,l:0,gf:1,ga:1,gd:0,pts:1},{team:'🇮🇷 Iran',p:1,w:0,d:1,l:0,gf:2,ga:2,gd:0,pts:1},{team:'🇳🇿 New Zealand',p:1,w:0,d:1,l:0,gf:2,ga:2,gd:0,pts:1}],
+    table:[{team:'🇳🇿 New Zealand',p:1,w:0,d:1,l:0,gf:2,ga:2,gd:0,pts:1},{team:'🇮🇷 Iran',p:1,w:0,d:1,l:0,gf:2,ga:2,gd:0,pts:1},{team:'🇧🇪 Belgium',p:1,w:0,d:1,l:0,gf:1,ga:1,gd:0,pts:1},{team:'🇪🇬 Egypt',p:1,w:0,d:1,l:0,gf:1,ga:1,gd:0,pts:1}],
     matches:[
       {home:'🇧🇪 Belgium',away:'🇪🇬 Egypt',score:'1-1',date:'Mon, Jun 15',time:'3:00 PM ET',tv:'FS1'},
       {home:'🇮🇷 Iran',away:'🇳🇿 New Zealand',score:'2-2',date:'Mon, Jun 15',time:'9:00 PM ET',tv:'FS1'},
@@ -313,7 +320,7 @@ const GROUPS = {
       {home:'🇳🇿 New Zealand',away:'🇧🇪 Belgium',score:null,date:'Fri, Jun 26',time:'11:00 PM ET',tv:'FS1'},
     ]},
   H:{teams:['🇪🇸 Spain','🇺🇾 Uruguay','🇸🇦 Saudi Arabia','🇨🇻 Cape Verde'],result:null,
-    table:[{team:'🇪🇸 Spain',p:1,w:0,d:1,l:0,gf:0,ga:0,gd:0,pts:1},{team:'🇨🇻 Cape Verde',p:1,w:0,d:1,l:0,gf:0,ga:0,gd:0,pts:1},{team:'🇺🇾 Uruguay',p:1,w:0,d:1,l:0,gf:1,ga:1,gd:0,pts:1},{team:'🇸🇦 Saudi Arabia',p:1,w:0,d:1,l:0,gf:1,ga:1,gd:0,pts:1}],
+    table:[{team:'🇺🇾 Uruguay',p:1,w:0,d:1,l:0,gf:1,ga:1,gd:0,pts:1},{team:'🇸🇦 Saudi Arabia',p:1,w:0,d:1,l:0,gf:1,ga:1,gd:0,pts:1},{team:'🇪🇸 Spain',p:1,w:0,d:1,l:0,gf:0,ga:0,gd:0,pts:1},{team:'🇨🇻 Cape Verde',p:1,w:0,d:1,l:0,gf:0,ga:0,gd:0,pts:1}],
     matches:[
       {home:'🇪🇸 Spain',away:'🇨🇻 Cape Verde',score:'0-0',date:'Mon, Jun 15',time:'12:00 PM ET',tv:'FOX'},
       {home:'🇸🇦 Saudi Arabia',away:'🇺🇾 Uruguay',score:'1-1',date:'Mon, Jun 15',time:'6:00 PM ET',tv:'FS1'},
@@ -323,7 +330,7 @@ const GROUPS = {
       {home:'🇺🇾 Uruguay',away:'🇪🇸 Spain',score:null,date:'Fri, Jun 26',time:'8:00 PM ET',tv:'FOX'},
     ]},
   I:{teams:['🇫🇷 France','🇸🇳 Senegal','🇳🇴 Norway','🇮🇶 Iraq'],result:null,
-    table:[{team:'🇫🇷 France',p:1,w:1,d:0,l:0,gf:3,ga:1,gd:+2,pts:3},{team:'🇳🇴 Norway',p:1,w:1,d:0,l:0,gf:4,ga:1,gd:+3,pts:3},{team:'🇸🇳 Senegal',p:1,w:0,d:0,l:1,gf:1,ga:3,gd:-2,pts:0},{team:'🇮🇶 Iraq',p:1,w:0,d:0,l:1,gf:1,ga:4,gd:-3,pts:0}],
+    table:[{team:'🇳🇴 Norway',p:1,w:1,d:0,l:0,gf:4,ga:1,gd:+3,pts:3},{team:'🇫🇷 France',p:1,w:1,d:0,l:0,gf:3,ga:1,gd:+2,pts:3},{team:'🇸🇳 Senegal',p:1,w:0,d:0,l:1,gf:1,ga:3,gd:-2,pts:0},{team:'🇮🇶 Iraq',p:1,w:0,d:0,l:1,gf:1,ga:4,gd:-3,pts:0}],
     matches:[
       {home:'🇫🇷 France',away:'🇸🇳 Senegal',score:'3-1',date:'Tue, Jun 16',time:'3:00 PM ET',tv:'FOX'},
       {home:'🇮🇶 Iraq',away:'🇳🇴 Norway',score:'1-4',date:'Tue, Jun 16',time:'6:00 PM ET',tv:'FOX'},
@@ -333,7 +340,7 @@ const GROUPS = {
       {home:'🇸🇳 Senegal',away:'🇮🇶 Iraq',score:null,date:'Fri, Jun 26',time:'3:00 PM ET',tv:'FS1'},
     ]},
   J:{teams:['🇦🇷 Argentina','🇦🇹 Austria','🇩🇿 Algeria','🇯🇴 Jordan'],result:null,
-    table:[{team:'🇦🇷 Argentina',p:1,w:1,d:0,l:0,gf:3,ga:0,gd:+3,pts:3},{team:'🇦🇹 Austria',p:1,w:1,d:0,l:0,gf:3,ga:1,gd:+2,pts:3},{team:'🇩🇿 Algeria',p:1,w:0,d:0,l:1,gf:0,ga:3,gd:-3,pts:0},{team:'🇯🇴 Jordan',p:1,w:0,d:0,l:1,gf:1,ga:3,gd:-2,pts:0}],
+    table:[{team:'🇦🇷 Argentina',p:1,w:1,d:0,l:0,gf:3,ga:0,gd:+3,pts:3},{team:'🇦🇹 Austria',p:1,w:1,d:0,l:0,gf:3,ga:1,gd:+2,pts:3},{team:'🇯🇴 Jordan',p:1,w:0,d:0,l:1,gf:1,ga:3,gd:-2,pts:0},{team:'🇩🇿 Algeria',p:1,w:0,d:0,l:1,gf:0,ga:3,gd:-3,pts:0}],
     matches:[
       {home:'🇦🇷 Argentina',away:'🇩🇿 Algeria',score:'3-0',date:'Tue, Jun 16',time:'9:00 PM ET',tv:'FOX'},
       {home:'🇦🇹 Austria',away:'🇯🇴 Jordan',score:'3-1',date:'Tue, Jun 16',time:'12:00 AM ET',tv:'FS1'},
@@ -343,7 +350,7 @@ const GROUPS = {
       {home:'🇩🇿 Algeria',away:'🇦🇹 Austria',score:null,date:'Sat, Jun 27',time:'10:00 PM ET',tv:'FS1'},
     ]},
   K:{teams:['🇵🇹 Portugal','🇨🇴 Colombia','🇨🇩 DR Congo','🇺🇿 Uzbekistan'],result:null,
-    table:[{team:'🇨🇴 Colombia',p:1,w:1,d:0,l:0,gf:3,ga:1,gd:+2,pts:3},{team:'🇵🇹 Portugal',p:1,w:0,d:1,l:0,gf:1,ga:1,gd:0,pts:1},{team:'🇨🇩 DR Congo',p:1,w:0,d:1,l:0,gf:1,ga:1,gd:0,pts:1},{team:'🇺🇿 Uzbekistan',p:1,w:0,d:0,l:1,gf:1,ga:3,gd:-2,pts:0}],
+    table:[{team:'🇨🇴 Colombia',p:1,w:1,d:0,l:0,gf:3,ga:1,gd:+2,pts:3},{team:'🇨🇩 DR Congo',p:1,w:0,d:1,l:0,gf:1,ga:1,gd:0,pts:1},{team:'🇵🇹 Portugal',p:1,w:0,d:1,l:0,gf:1,ga:1,gd:0,pts:1},{team:'🇺🇿 Uzbekistan',p:1,w:0,d:0,l:1,gf:1,ga:3,gd:-2,pts:0}],
     matches:[
       {home:'🇵🇹 Portugal',away:'🇨🇩 DR Congo',score:'1-1',date:'Wed, Jun 17',time:'1:00 PM ET',tv:'FOX'},
       {home:'🇺🇿 Uzbekistan',away:'🇨🇴 Colombia',score:'1-3',date:'Wed, Jun 17',time:'10:00 PM ET',tv:'FS1'},
@@ -353,7 +360,7 @@ const GROUPS = {
       {home:'🇨🇩 DR Congo',away:'🇺🇿 Uzbekistan',score:null,date:'Sat, Jun 27',time:'7:30 PM ET',tv:'FS1'},
     ]},
   L:{teams:['🇬🇧 England','🇭🇷 Croatia','🇬🇭 Ghana','🇵🇦 Panama'],result:null,
-    table:[{team:'🇬🇧 England',p:1,w:1,d:0,l:0,gf:4,ga:2,gd:+2,pts:3},{team:'🇬🇭 Ghana',p:1,w:1,d:0,l:0,gf:1,ga:0,gd:+1,pts:3},{team:'🇭🇷 Croatia',p:1,w:0,d:0,l:1,gf:2,ga:4,gd:-2,pts:0},{team:'🇵🇦 Panama',p:1,w:0,d:0,l:1,gf:0,ga:1,gd:-1,pts:0}],
+    table:[{team:'🇬🇧 England',p:1,w:1,d:0,l:0,gf:4,ga:2,gd:+2,pts:3},{team:'🇬🇭 Ghana',p:1,w:1,d:0,l:0,gf:1,ga:0,gd:+1,pts:3},{team:'🇵🇦 Panama',p:1,w:0,d:0,l:1,gf:0,ga:1,gd:-1,pts:0},{team:'🇭🇷 Croatia',p:1,w:0,d:0,l:1,gf:2,ga:4,gd:-2,pts:0}],
     matches:[
       {home:'🇬🇧 England',away:'🇭🇷 Croatia',score:'4-2',date:'Wed, Jun 17',time:'4:00 PM ET',tv:'FOX'},
       {home:'🇬🇭 Ghana',away:'🇵🇦 Panama',score:'1-0',date:'Wed, Jun 17',time:'7:00 PM ET',tv:'FS1'},
@@ -474,8 +481,32 @@ function maxBonusPts(picks,result){
 
 function maxThirdPts(p){
   if(!p.thirds) return 0;
-  // best case: every pick not yet known to be wrong, still advances
-  return p.thirds.length*3; // assume all 8 could still hit (simplified ceiling)
+  // best case: only count picks that are still 'open' or already 'hit' — exclude confirmed misses
+  return p.thirds.reduce((sum,teamName)=>{
+    const state = thirdPickState(teamName);
+    return sum + (state==='miss' ? 0 : 3);
+  }, 0);
+}
+
+function findTeamGroup(teamName){
+  for(const g of Object.keys(GROUPS)){
+    if(GROUPS[g].teams.some(t=>countryName(t)===teamName)) return g;
+  }
+  return null;
+}
+
+function thirdPickState(teamName){
+  // Returns 'hit' | 'miss' | 'open' for a single 3rd-place advancing pick
+  if(ADVANCING_3RD.includes(teamName)) return 'hit';
+  const g=findTeamGroup(teamName);
+  if(!g) return 'open';
+  const grp=GROUPS[g];
+  const teamIdx=grp.teams.findIndex(t=>countryName(t)===teamName);
+  if(teamIdx===-1) return 'open';
+  const confirmedPos = grp.result ? grp.result[teamIdx] : null;
+  if(confirmedPos!==null && confirmedPos!==undefined && confirmedPos!==3) return 'miss'; // locked into a position that isn't 3rd
+  if(ADVANCING_3RD.length>0 && confirmedPos===3 && !ADVANCING_3RD.includes(teamName)) return 'miss'; // finished 3rd but didn't make the top 8
+  return 'open';
 }
 
 function maxPossibleScore(p){
@@ -536,7 +567,39 @@ function renderLeaderboard(){
 
 // GROUPS
 function renderGroupView(){
-  let html='<div class="group-list">';
+  let html='';
+
+  // 3rd Place Table — cross-group ranking of all current 3rd-place finishers
+  {
+    const thirdPlaceRows = Object.keys(GROUPS).map(g=>{
+      const grp=GROUPS[g];
+      const row = grp.table[2]; // 3rd row in standings = current 3rd place team
+      return { group:g, team:row.team, pts:row.pts, gd:row.gd, gf:row.gf||0, ga:row.ga||0, p:row.p };
+    });
+    thirdPlaceRows.sort((a,b)=> b.pts-a.pts || b.gd-a.gd || b.gf-a.gf);
+
+    html+=`<div class="sec-label" style="margin-bottom:8px">3rd Place Team Rankings</div>
+    <div class="third-place-table-wrap" style="margin-bottom:20px">
+      <table class="standings-tbl">
+        <thead><tr><th></th><th class="team-th">Team</th><th>Grp</th><th>P</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th></tr></thead>
+        <tbody>`;
+    thirdPlaceRows.forEach((row,i)=>{
+      const advancingClass = i<8 ? ' qualify' : '';
+      html+=`<tr>
+        <td style="text-align:center;color:var(--muted);font-size:11px">${i+1}</td>
+        <td class="team-td${advancingClass}" style="color:var(--text)">${teamName(row.team)}</td>
+        <td style="text-align:center;color:var(--muted)">${row.group}</td>
+        <td style="color:var(--text)">${row.p}</td><td style="color:var(--text)">${row.gf}</td><td style="color:var(--text)">${row.ga}</td>
+        <td style="color:var(--text)">${row.gd>0?'+'+row.gd:row.gd}</td>
+        <td style="font-weight:600;color:var(--accent)">${row.pts}</td>
+      </tr>`;
+    });
+    html+=`</tbody></table>
+      <div class="rules-note" style="margin-top:8px">Top 8 (green bar) currently project to advance. Rankings shift as more groups complete their matches.</div>
+    </div>`;
+  }
+
+  html+='<div class="group-list">';
   Object.keys(GROUPS).forEach(g=>{
     const grp=GROUPS[g],done=!!(grp.result&&!grp.result.includes(null));
     html+=`<button class="group-btn" onclick="openSheet('${g}')">
@@ -672,7 +735,6 @@ function renderPlayerDetail(){
     <div class="score-card"><div class="score-card-label">Rank</div><div class="score-card-val">${rank} of ${PLAYERS.length}</div></div>
     <div class="score-card"><div class="score-card-label">Group + Bonus + 3rd</div><div class="score-card-val">${gp+bp+calcThirdPts(p1)}</div></div>
     <div class="score-card"><div class="score-card-label">KO pts</div><div class="score-card-val">—</div></div>
-  <div class="score-card" style="grid-column:1/-1"><div class="score-card-label">3rd place picks</div><div class="score-card-val" style="font-size:13px;color:var(--text)">${(p1.thirds||[]).join(', ')}</div></div>
   </div>`;
 
   // Max Possible Final Score breakdown — solo view only
@@ -692,6 +754,26 @@ function renderPlayerDetail(){
       <div class="analytic-row"><span>Knockout stage (full ceiling)</span><span class="analytic-val good">${KNOCKOUT_MAX}</span></div>
       <div class="analytic-row" style="border-top:1px solid var(--border);margin-top:4px;padding-top:8px"><span style="font-weight:600">Maximum Final Score</span><span class="analytic-val neutral" style="font-size:18px">${grandMax}</span></div>
     </div>`;
+  }
+
+  // 3rd Place Pick Breakdown — solo view only
+  if(!isCompare && p1.thirds && p1.thirds.length){
+    html+=`<div class="sec-label" style="margin-bottom:8px">3rd Place Advancing Picks</div>
+    <div class="analytic-card" style="margin-bottom:16px">`;
+    p1.thirds.forEach(teamName=>{
+      const state = thirdPickState(teamName);
+      const cls = state==='hit'?'bd-hit':state==='miss'?'bd-miss':'bd-open';
+      let ptsDisplay;
+      if(state==='hit'){
+        ptsDisplay = `<span class="bd-icon bd-icon-hit">✓</span> 3`;
+      } else if(state==='miss'){
+        ptsDisplay = `<span class="bd-icon bd-icon-miss">✗</span> 3`;
+      } else {
+        ptsDisplay = `3`;
+      }
+      html+=`<div class="bd-row ${cls}"><span class="bd-label">${teamName}</span><span class="bd-pts">${ptsDisplay}</span></div>`;
+    });
+    html+=`</div>`;
   }
 
   if(isCompare){
@@ -842,7 +924,14 @@ function renderPlayerDetail(){
 
         rows.forEach(r=>{
           const cls = r.state==='hit'?'bd-hit':r.state==='miss'?'bd-miss':'bd-open';
-          const ptsDisplay = r.state==='miss' ? `<s>${r.pts}</s>` : `+${r.pts}`;
+          let ptsDisplay;
+          if(r.state==='hit'){
+            ptsDisplay = `<span class="bd-icon bd-icon-hit">✓</span> ${r.pts}`;
+          } else if(r.state==='miss'){
+            ptsDisplay = `<span class="bd-icon bd-icon-miss">✗</span> ${r.pts}`;
+          } else {
+            ptsDisplay = `${r.pts}`;
+          }
           html+=`<div class="bd-row ${cls}"><span class="bd-label">${r.label}</span><span class="bd-pts">${ptsDisplay}</span></div>`;
         });
       }
