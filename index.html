@@ -43,10 +43,10 @@ body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--te
 .fdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; flex-shrink: 0; vertical-align: middle; }
 
 /* ── LEADERBOARD ── */
-.lb-header-row { display: grid; grid-template-columns: 28px 1fr 48px 48px 48px 56px; gap: 4px; padding: 0 10px; font-size: 9px; font-weight: 600; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+.lb-header-row { display: grid; grid-template-columns: 26px 1fr 40px 40px 40px 48px 48px; gap: 3px; padding: 0 8px; font-size: 9px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
 .lb-header-row div { text-align: center; }
 .lb-header-row .lh-name { text-align: left; }
-.lb-card { display: grid; grid-template-columns: 28px 1fr 48px 48px 48px 56px; gap: 4px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px; cursor: pointer; transition: border-color 0.15s; margin-bottom: 4px; }
+.lb-card { display: grid; grid-template-columns: 26px 1fr 40px 40px 40px 48px 48px; gap: 3px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 8px; cursor: pointer; transition: border-color 0.15s; margin-bottom: 4px; }
 .lb-card:hover { border-color: var(--accent2); }
 .lb-card.leader { border-color: var(--accent); }
 .lb-rank { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; text-align: center; color: var(--muted); }
@@ -56,6 +56,7 @@ body { font-family: 'Barlow', sans-serif; background: var(--bg); color: var(--te
 .lb-name { font-weight: 500; font-size: 13px; color: var(--text); }
 .lb-bar-wrap { height: 2px; background: var(--border); border-radius: 1px; margin-top: 3px; }
 .lb-bar { height: 2px; background: var(--accent); border-radius: 1px; opacity: 0.5; }
+.lb-max { text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; color: var(--green); }
 .lb-pts { text-align: center; font-size: 12px; color: var(--muted); }
 .lb-total { text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 700; color: var(--accent); }
 
@@ -139,6 +140,14 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 .player-group-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 11px 13px; }
 .player-group-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .player-group-col-label { font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+
+.point-breakdown { margin-top: 4px; }
+.bd-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 8px; border-radius: 5px; font-size: 11px; margin-bottom: 3px; }
+.bd-row.bd-hit  { background: var(--green-bg); color: var(--green); }
+.bd-row.bd-miss { background: var(--red-bg); color: var(--red); opacity: 0.75; }
+.bd-row.bd-open { background: var(--amber-bg); color: var(--amber); }
+.bd-label { flex: 1; }
+.bd-pts { font-weight: 700; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; margin-left: 8px; }
 .mini-standings { width: 100%; border-collapse: collapse; font-size: 10px; }
 .mini-standings th { font-size: 8px; font-weight: 600; color: var(--muted); padding: 2px 3px; text-align: center; border-bottom: 1px solid var(--border); }
 .mini-standings td { padding: 3px 3px; text-align: center; border-bottom: 1px solid var(--border); font-size: 10px; color: var(--text); }
@@ -182,7 +191,7 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 </head>
 <body>
 <div class="header">
-  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated June 18 — through Jun 18 results</span></div>
+  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated June 21 — through Jun 20 results</span></div>
   <div class="tabs">
     <button class="tab active" onclick="showTab('lb',this)">Leaderboard</button>
     <button class="tab" onclick="showTab('gv',this)">Groups</button>
@@ -283,13 +292,13 @@ const GROUPS = {
       {home:'🇪🇨 Ecuador',away:'🇩🇪 Germany',score:null,date:'Thu, Jun 25',time:'4:00 PM ET',tv:'FS1'},
       {home:'🇨🇼 Curaçao',away:'🇨🇮 Ivory Coast',score:null,date:'Thu, Jun 25',time:'4:00 PM ET',tv:'FS1'},
     ]},
-  F:{teams:['🇳🇱 Netherlands','🇯🇵 Japan','🇸🇪 Sweden','🇹🇳 Tunisia'],result:null,
-    table:[{team:'🇳🇱 Netherlands',p:2,w:1,d:1,l:0,gf:7,ga:3,gd:+4,pts:4},{team:'🇸🇪 Sweden',p:2,w:1,d:0,l:1,gf:6,ga:6,gd:0,pts:3},{team:'🇯🇵 Japan',p:1,w:0,d:1,l:0,gf:2,ga:2,gd:0,pts:1},{team:'🇹🇳 Tunisia',p:1,w:0,d:0,l:1,gf:1,ga:5,gd:-4,pts:0}],
+  F:{teams:['🇳🇱 Netherlands','🇯🇵 Japan','🇸🇪 Sweden','🇹🇳 Tunisia'],result:[null,null,null,4],
+    table:[{team:'🇳🇱 Netherlands',p:2,w:1,d:1,l:0,gf:7,ga:3,gd:+4,pts:4},{team:'🇯🇵 Japan',p:2,w:1,d:1,l:0,gf:6,ga:3,gd:+3,pts:4},{team:'🇸🇪 Sweden',p:2,w:1,d:0,l:1,gf:6,ga:6,gd:0,pts:3},{team:'🇹🇳 Tunisia',p:2,w:0,d:0,l:2,gf:1,ga:9,gd:-8,pts:0}],
     matches:[
       {home:'🇳🇱 Netherlands',away:'🇯🇵 Japan',score:'2-2',date:'Sun, Jun 14',time:'4:00 PM ET',tv:'FOX'},
       {home:'🇸🇪 Sweden',away:'🇹🇳 Tunisia',score:'5-1',date:'Sun, Jun 14',time:'10:00 PM ET',tv:'FS1'},
       {home:'🇳🇱 Netherlands',away:'🇸🇪 Sweden',score:'5-1',date:'Sat, Jun 20',time:'1:00 PM ET',tv:'FOX'},
-      {home:'🇹🇳 Tunisia',away:'🇯🇵 Japan',score:null,date:'Sat, Jun 20',time:'12:00 AM ET',tv:'FS1'},
+      {home:'🇹🇳 Tunisia',away:'🇯🇵 Japan',score:'0-4',date:'Sat, Jun 20',time:'12:00 AM ET',tv:'FS1'},
       {home:'🇯🇵 Japan',away:'🇸🇪 Sweden',score:null,date:'Thu, Jun 25',time:'7:00 PM ET',tv:'FS1'},
       {home:'🇹🇳 Tunisia',away:'🇳🇱 Netherlands',score:null,date:'Thu, Jun 25',time:'7:00 PM ET',tv:'FS1'},
     ]},
@@ -405,6 +414,79 @@ function calcThirdPts(p){if(!p.thirds||!ADVANCING_3RD.length)return 0;return p.t
 function playerGroupPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcGroupPts(p.picks[g],GROUPS[g].result,g),0);}
 function playerBonusPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcBonusPts(p.picks[g],GROUPS[g].result),0);}
 function totalPts(p){return playerGroupPts(p)+playerBonusPts(p)+calcThirdPts(p);}
+
+// ─── MAX POSSIBLE FINAL SCORE ───────────────────────────────────────────────
+const KNOCKOUT_MAX = 16*10 + 8*20 + 4*50 + 2*100 + 1*250; // 970
+
+function maxGroupPts(picks,result,group){
+  // If group fully resolved or has no result yet, treat consistently
+  const teams=GROUPS[group].teams;
+  const p1=picks.indexOf(1),p2=picks.indexOf(2);
+
+  let r = result || [null,null,null,null];
+  const a1 = r.indexOf(1); // -1 if not locked
+  const a2 = r.indexOf(2);
+
+  let max1=0, max2=0;
+
+  // Best case for 1st place pick
+  if(a1!==-1){
+    // 1st place locked — only scores if pick matches it
+    max1 = (p1===a1) ? 10 : 0;
+    // could it still hit 5 via landing on 2nd? only if 2nd not locked or matches
+    if(p1!==a1){
+      if(a2!==-1){ max1 = (p1===a2)?5:0; }
+      else { max1 = 5; } // 2nd still open, could land there
+    }
+  } else {
+    max1 = 10; // 1st place still open — best case nails it
+  }
+
+  // Best case for 2nd place pick
+  if(a2!==-1){
+    if(p2===a2){ max2=5; }
+    else if(a1!==-1 && p2===a1){ max2=5; }
+    else if(a1===-1){ max2=5; } // 1st not locked, could still match it
+    else {
+      // check 3rd-and-advance potential
+      const finishPos=r[p2];
+      if(finishPos===3 || finishPos===null){
+        max2 = 2; // could still be the advancing 3rd (best case)
+      } else {
+        max2 = 0;
+      }
+    }
+  } else {
+    max2 = 5; // 2nd place open — best case nails it directly
+  }
+
+  return max1+max2;
+}
+
+function maxBonusPts(picks,result){
+  if(!result) return 5; // fully open group, bonus still achievable
+  // Check if any locked position already contradicts the player's picks
+  for(let i=0;i<4;i++){
+    if(result[i]!==null && result[i]!==picks[i]) return 0; // contradiction, bonus impossible
+  }
+  return 5; // no contradictions yet, bonus still possible
+}
+
+function maxThirdPts(p){
+  if(!p.thirds) return 0;
+  // best case: every pick not yet known to be wrong, still advances
+  return p.thirds.length*3; // assume all 8 could still hit (simplified ceiling)
+}
+
+function maxPossibleScore(p){
+  let groupMax=0, bonusMax=0;
+  Object.keys(GROUPS).forEach(g=>{
+    groupMax += maxGroupPts(p.picks[g], GROUPS[g].result, g);
+    bonusMax += maxBonusPts(p.picks[g], GROUPS[g].result);
+  });
+  const thirdMax = maxThirdPts(p);
+  return groupMax + bonusMax + thirdMax + KNOCKOUT_MAX;
+}
 function sortedPlayers(){return [...PLAYERS].sort((a,b)=>totalPts(b)-totalPts(a));}
 function badgeClass(pick,actual,teamName){
   if(actual===null||actual===undefined)return 'pending';
@@ -436,15 +518,17 @@ function matchBlock(m) {
 // LEADERBOARD
 function renderLeaderboard(){
   const sorted=sortedPlayers(),max=totalPts(sorted[0])||1;
-  let html=`<div class="lb-header-row"><div></div><div class="lh-name">Player</div><div>Group</div><div>Bonus</div><div>3rd pl.</div><div>Total</div></div>`;
+  let html=`<div class="lb-header-row"><div></div><div class="lh-name">Player</div><div>Group</div><div>Bonus</div><div>3rd pl.</div><div>Total</div><div>Max</div></div>`;
   sorted.forEach((p,i)=>{
     const rank=i+1,rc=rank===1?'r1':rank===2?'r2':rank===3?'r3':'';
     const gp=playerGroupPts(p),bp=playerBonusPts(p),tot=totalPts(p),bar=Math.round(tot/max*100);
+    const mx=maxPossibleScore(p);
     html+=`<div class="lb-card${rank===1?' leader':''}" onclick="goPlayer('${p.name}')">
       <div class="lb-rank ${rc}">${rank}</div>
       <div><div class="lb-name">${p.name}</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:${bar}%"></div></div></div>
       <div class="lb-pts">${gp}</div><div class="lb-pts">${bp>0?'+'+bp:'—'}</div><div class="lb-pts">${calcThirdPts(p)>0?calcThirdPts(p):'—'}</div>
       <div class="lb-total">${tot}</div>
+      <div class="lb-max">${mx}</div>
     </div>`;
   });
   document.getElementById('lb').innerHTML=html;
@@ -591,6 +675,25 @@ function renderPlayerDetail(){
   <div class="score-card" style="grid-column:1/-1"><div class="score-card-label">3rd place picks</div><div class="score-card-val" style="font-size:13px;color:var(--text)">${(p1.thirds||[]).join(', ')}</div></div>
   </div>`;
 
+  // Max Possible Final Score breakdown — solo view only
+  if(!isCompare){
+    let groupMaxTotal=0, bonusMaxTotal=0;
+    Object.keys(GROUPS).forEach(g=>{
+      groupMaxTotal += maxGroupPts(p1.picks[g], GROUPS[g].result, g);
+      bonusMaxTotal += maxBonusPts(p1.picks[g], GROUPS[g].result);
+    });
+    const thirdMaxTotal = maxThirdPts(p1);
+    const grandMax = groupMaxTotal + bonusMaxTotal + thirdMaxTotal + KNOCKOUT_MAX;
+    html+=`<div class="analytic-card" style="margin-bottom:16px;border-color:var(--accent2)">
+      <div class="analytic-title">Max Possible Final Score</div>
+      <div class="analytic-row"><span>Group picks (best case)</span><span class="analytic-val good">${groupMaxTotal}</span></div>
+      <div class="analytic-row"><span>Perfect group bonuses (best case)</span><span class="analytic-val good">${bonusMaxTotal}</span></div>
+      <div class="analytic-row"><span>3rd place picks (best case)</span><span class="analytic-val good">${thirdMaxTotal}</span></div>
+      <div class="analytic-row"><span>Knockout stage (full ceiling)</span><span class="analytic-val good">${KNOCKOUT_MAX}</span></div>
+      <div class="analytic-row" style="border-top:1px solid var(--border);margin-top:4px;padding-top:8px"><span style="font-weight:600">Maximum Final Score</span><span class="analytic-val neutral" style="font-size:18px">${grandMax}</span></div>
+    </div>`;
+  }
+
   if(isCompare){
     // Overall summary card
     const title=comparePlayers.map(p=>p.name.split(' ')[0]).join(' vs ');
@@ -674,7 +777,77 @@ function renderPlayerDetail(){
       });
       html+=`</tbody></table>
         </div>
-      </div></div>`;
+      </div>
+      <div class="point-breakdown">
+        <div class="player-group-col-label" style="margin-top:10px">Point Breakdown</div>`;
+
+      // Build breakdown rows for this group/player — ALWAYS show all 6 possible point sources
+      {
+        const picks=p1.picks[g];
+        const result=grp.result; // array of 4, each null (open) or 1-4 (confirmed position), or null entirely (group untouched)
+        const p1pickPos=picks.indexOf(1), p2pickPos=picks.indexOf(2);
+        const pick1Team=countryName(grp.teams[p1pickPos]);
+        const pick2Team=countryName(grp.teams[p2pickPos]);
+        const a1=result?result.indexOf(1):-1; // confirmed 1st index, -1 if not locked
+        const a2=result?result.indexOf(2):-1; // confirmed 2nd index, -1 if not locked
+
+        function rowState(targetPos, checkIdx, requiredFinish){
+          // targetPos: the confirmed-position index we need (a1 or a2), -1 if not locked
+          // checkIdx: the pick's team index we're testing against that position
+          // requiredFinish: the finishing position (1 or 2) this row requires checkIdx's team to have
+          // If the team at checkIdx already has a DIFFERENT confirmed finish, it's an automatic miss
+          if(result){
+            const actualFinishOfCheckTeam = result[checkIdx];
+            if(actualFinishOfCheckTeam!==null && actualFinishOfCheckTeam!==undefined && actualFinishOfCheckTeam!==requiredFinish){
+              return 'miss'; // this team is already confirmed at a different spot
+            }
+          }
+          if(targetPos===-1) return 'open';
+          return checkIdx===targetPos ? 'hit' : 'miss';
+        }
+
+        const rows=[];
+        // 1) 1st pick finishes 1st (10)
+        rows.push({label:`${pick1Team} finishes 1st`, pts:10, state: rowState(a1,p1pickPos,1)});
+        // 2) 1st pick finishes 2nd (5)
+        rows.push({label:`${pick1Team} finishes 2nd`, pts:5, state: rowState(a2,p1pickPos,2)});
+        // 3) 2nd pick finishes 2nd (5)
+        rows.push({label:`${pick2Team} finishes 2nd`, pts:5, state: rowState(a2,p2pickPos,2)});
+        // 4) 2nd pick finishes 1st (5)
+        rows.push({label:`${pick2Team} finishes 1st`, pts:5, state: rowState(a1,p2pickPos,1)});
+        // 5) 2nd pick finishes 3rd & advances (2)
+        {
+          const finishPosOf2ndPick = result?result[p2pickPos]:null;
+          let state;
+          if(finishPosOf2ndPick===3){
+            state = ADVANCING_3RD.includes(pick2Team) ? 'hit' : (ADVANCING_3RD.length ? 'miss' : 'open');
+          } else if(finishPosOf2ndPick===null || finishPosOf2ndPick===undefined){
+            state = 'open';
+          } else {
+            state = 'miss'; // confirmed at a position other than 3rd
+          }
+          rows.push({label:`${pick2Team} 3rd & advances`, pts:2, state});
+        }
+        // 6) Perfect group bonus (5)
+        {
+          let state='open';
+          if(result){
+            let contradicted=false;
+            for(let i=0;i<4;i++){ if(result[i]!==null && result[i]!==picks[i]){ contradicted=true; break; } }
+            if(contradicted) state='miss';
+            else if(result.every((v,i)=>v===picks[i])) state='hit';
+          }
+          rows.push({label:'Perfect group (1-2-3-4)', pts:5, state});
+        }
+
+        rows.forEach(r=>{
+          const cls = r.state==='hit'?'bd-hit':r.state==='miss'?'bd-miss':'bd-open';
+          const ptsDisplay = r.state==='miss' ? `<s>${r.pts}</s>` : `+${r.pts}`;
+          html+=`<div class="bd-row ${cls}"><span class="bd-label">${r.label}</span><span class="bd-pts">${ptsDisplay}</span></div>`;
+        });
+      }
+
+      html+=`</div></div>`;
     });
     html+=`</div>`;
 
