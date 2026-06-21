@@ -48,6 +48,10 @@ html { background: var(--bg) !important; }
 
 /* ── LEADERBOARD ── */
 .lb-header-row { display: grid; grid-template-columns: 26px 1fr 40px 40px 40px 48px 48px; gap: 3px; padding: 0 8px; font-size: 9px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+.lh-sortable { cursor: pointer; user-select: none; transition: color 0.15s; text-align: center; }
+.lh-sortable:hover { color: var(--text); }
+.lh-sortable.lh-active { color: var(--accent); font-weight: 700; }
+.lh-name.lh-sortable { text-align: left; }
 .lb-header-row div { text-align: center; }
 .lb-header-row .lh-name { text-align: left; }
 .lb-card { display: grid; grid-template-columns: 26px 1fr 40px 40px 40px 48px 48px; gap: 3px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 8px; cursor: pointer; transition: border-color 0.15s; margin-bottom: 4px; }
@@ -547,11 +551,64 @@ function matchBlock(m) {
 }
 
 // LEADERBOARD
+let lbSortKey = 'total';
+let lbSortDir = 'desc';
+
+function lbSortValue(p, key) {
+  switch(key) {
+    case 'name': return p.name.toLowerCase();
+    case 'group': return playerGroupPts(p);
+    case 'bonus': return playerBonusPts(p);
+    case 'third': return calcThirdPts(p);
+    case 'total': return totalPts(p);
+    case 'max': return maxPossibleScore(p);
+    default: return 0;
+  }
+}
+
+function setLbSort(key) {
+  if (lbSortKey === key) {
+    lbSortDir = lbSortDir === 'desc' ? 'asc' : 'desc';
+  } else {
+    lbSortKey = key;
+    lbSortDir = key === 'name' ? 'asc' : 'desc';
+  }
+  renderLeaderboard();
+}
+
 function renderLeaderboard(){
-  const sorted=sortedPlayers(),max=totalPts(sorted[0])||1;
-  let html=`<div class="lb-header-row"><div></div><div class="lh-name">Player</div><div>Group</div><div>Bonus</div><div>3rd pl.</div><div>Total</div><div>Max</div></div>`;
-  sorted.forEach((p,i)=>{
-    const rank=i+1,rc=rank===1?'r1':rank===2?'r2':rank===3?'r3':'';
+  const ranked = [...PLAYERS].sort((a,b) => totalPts(b) - totalPts(a)); // rank badge always reflects true standing
+  const rankMap = new Map(ranked.map((p,i) => [p.name, i+1]));
+
+  const sorted = [...PLAYERS].sort((a,b) => {
+    const av = lbSortValue(a, lbSortKey), bv = lbSortValue(b, lbSortKey);
+    let cmp;
+    if (typeof av === 'string') cmp = av.localeCompare(bv);
+    else cmp = av - bv;
+    return lbSortDir === 'asc' ? cmp : -cmp;
+  });
+
+  const max = totalPts(ranked[0]) || 1;
+
+  const cols = [
+    { key:'name',  label:'Player' },
+    { key:'group',  label:'Group' },
+    { key:'bonus',  label:'Bonus' },
+    { key:'third',  label:'3rd pl.' },
+    { key:'total',  label:'Total' },
+    { key:'max',    label:'Max' },
+  ];
+  const arrow = (key) => lbSortKey===key ? (lbSortDir==='asc' ? ' ▲' : ' ▼') : '';
+
+  let html=`<div class="lb-header-row"><div></div>`;
+  cols.forEach(c=>{
+    const cls = c.key==='name' ? 'lh-name' : '';
+    html += `<div class="${cls} lh-sortable${lbSortKey===c.key?' lh-active':''}" onclick="setLbSort('${c.key}')">${c.label}${arrow(c.key)}</div>`;
+  });
+  html += `</div>`;
+
+  sorted.forEach((p)=>{
+    const rank=rankMap.get(p.name), rc=rank===1?'r1':rank===2?'r2':rank===3?'r3':'';
     const gp=playerGroupPts(p),bp=playerBonusPts(p),tot=totalPts(p),bar=Math.round(tot/max*100);
     const mx=maxPossibleScore(p);
     html+=`<div class="lb-card${rank===1?' leader':''}" onclick="goPlayer('${p.name}')">
