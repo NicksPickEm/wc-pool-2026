@@ -202,7 +202,7 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 </head>
 <body>
 <div class="header">
-  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated June 22, 11:10 PM ET</span></div>
+  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated June 23, 12:00 AM ET</span></div>
   <div class="tabs">
     <button class="tab active" onclick="showTab('lb',this)">Leaderboard</button>
     <button class="tab" onclick="showTab('gv',this)">Groups</button>
@@ -633,7 +633,7 @@ function renderGroupView(){
       const row = grp.table[2]; // 3rd row in standings = current 3rd place team
       return { group:g, team:row.team, pts:row.pts, gd:row.gd, gf:row.gf||0, ga:row.ga||0, p:row.p };
     });
-    thirdPlaceRows.sort((a,b)=> b.pts-a.pts || b.gd-a.gd || b.gf-a.gf);
+    thirdPlaceRows.sort((a,b)=> b.pts-a.pts || b.gd-a.gd || b.gf-a.gf || a.ga-b.ga);
 
     html+=`<div class="sec-label" style="margin-bottom:8px">3rd Place Team Rankings</div>
     <div class="third-place-table-wrap" style="margin-bottom:20px">
