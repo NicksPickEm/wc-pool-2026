@@ -204,7 +204,7 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 </head>
 <body>
 <div class="header">
-  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated June 25, 12:00 AM ET</span></div>
+  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated June 25, 3:36 AM ET</span></div>
   <div class="tabs">
     <button class="tab active" onclick="showTab('lb',this)">Leaderboard</button>
     <button class="tab" onclick="showTab('gv',this)">Groups</button>
@@ -400,7 +400,7 @@ const PLAYERS = [
 const ADVANCING_3RD = [];
 
 function calcGroupPts(picks,result,group){
-  if(!result)return 0;
+  if(!picks || !result) return 0;
   let pts=0;
   // Find confirmed 1st place (a1) and 2nd place (a2) — null means not yet confirmed
   const a1=result.indexOf(1); // -1 if 1st place not confirmed
@@ -432,8 +432,7 @@ function totalPts(p){return playerGroupPts(p)+playerBonusPts(p)+calcThirdPts(p);
 const KNOCKOUT_MAX = 16*10 + 8*20 + 4*50 + 2*100 + 1*250; // 970
 
 function maxGroupPts(picks,result,group){
-  // If group fully resolved or has no result yet, treat consistently
-  const teams=GROUPS[group].teams;
+  if(!picks || !group || !GROUPS[group]) return 0;
   const p1=picks.indexOf(1),p2=picks.indexOf(2);
 
   let r = result || [null,null,null,null];
@@ -962,7 +961,7 @@ function renderPlayerDetail(){
         const a1=result?result.indexOf(1):-1; // confirmed 1st index, -1 if not locked
         const a2=result?result.indexOf(2):-1; // confirmed 2nd index, -1 if not locked
 
-        function rowState(targetPos, checkIdx, requiredFinish){
+        const rowState = (targetPos, checkIdx, requiredFinish) => {
           // targetPos: the confirmed-position index we need (a1 or a2), -1 if not locked
           // checkIdx: the pick's team index we're testing against that position
           // requiredFinish: the finishing position (1 or 2) this row requires checkIdx's team to have
@@ -975,7 +974,7 @@ function renderPlayerDetail(){
           }
           if(targetPos===-1) return 'open';
           return checkIdx===targetPos ? 'hit' : 'miss';
-        }
+        };
 
         const rows=[];
         // 1) 1st pick finishes 1st (10)
@@ -1030,7 +1029,7 @@ function renderPlayerDetail(){
     html+=`</div>`;
 
     const doneGroups=Object.keys(GROUPS).filter(g=>GROUPS[g].result);
-    const scoredG=doneGroups.map(g=>({g,pts:calcGroupPts(p1.picks[g],GROUPS[g].result)+calcBonusPts(p1.picks[g],GROUPS[g].result)})).sort((a,b)=>b.pts-a.pts);
+    const scoredG=doneGroups.map(g=>({g,pts:calcGroupPts(p1.picks[g],GROUPS[g].result,g)+calcBonusPts(p1.picks[g],GROUPS[g].result)})).sort((a,b)=>b.pts-a.pts);
     const contrarian=[];
     doneGroups.forEach(g=>{
       GROUPS[g].teams.forEach((team,i)=>{
@@ -1119,11 +1118,11 @@ function renderRules(){
   document.getElementById('rl').innerHTML=html;
 }
 
-renderLeaderboard();
-renderGroupView();
-renderSchedule();
-renderPlayerView();
-renderRules();
+try{renderLeaderboard();}catch(e){console.error('LB error:',e);}
+try{renderGroupView();}catch(e){console.error('GV error:',e);}
+try{renderSchedule();}catch(e){console.error('SC error:',e);}
+try{renderPlayerView();}catch(e){console.error('PV error:',e);}
+try{renderRules();}catch(e){console.error('RL error:',e);}
 </script>
 </body>
 </html>
