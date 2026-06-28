@@ -100,6 +100,55 @@ html { background: var(--bg) !important; }
 .match-block { margin-bottom: 8px; }
 .match-num { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
 .match-info { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.ko-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 6px; }
+.ko-team { font-size: 13px; font-weight: 600; }
+.ko-team.home { text-align: left; }
+.ko-team.away { text-align: right; }
+.ko-center { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.ko-vs { font-size: 10px; font-weight: 700; color: var(--muted); }
+.ko-meta { font-size: 9px; color: var(--muted); text-align: center; white-space: nowrap; }
+.ko-badge { display: inline-block; background: var(--accent); color: #e8e2d8; font-size: 8px; font-weight: 700; padding: 1px 4px; border-radius: 3px; margin-left: 3px; }
+
+/* ── BRACKET ── */
+.br-round-tabs { display: flex; gap: 4px; overflow-x: auto; padding: 12px 12px 0; margin-bottom: 10px; }
+.br-round-tab { padding: 6px 11px; font-size: 11px; font-weight: 600; border-radius: 6px; color: var(--muted); background: var(--surface); border: 1px solid var(--border); white-space: nowrap; cursor: pointer; flex-shrink: 0; font-family: 'Barlow', sans-serif; }
+.br-round-tab.active { background: var(--accent); color: #e8e2d8; border-color: var(--accent); }
+.br-dots { display: flex; justify-content: center; gap: 6px; padding: 6px 0 10px; }
+.br-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); transition: background 0.2s; }
+.br-dot.active { background: var(--accent); }
+.br-swipe-wrapper { display: flex; transition: transform 0.3s ease; overflow: hidden; }
+.br-page { width: 100vw; padding: 0 12px 20px; flex-shrink: 0; box-sizing: border-box; }
+.br-summary { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 0; margin-bottom: 14px; display: flex; }
+.br-summary-stat { flex: 1; text-align: center; border-right: 1px solid var(--border); }
+.br-summary-stat:last-child { border-right: none; }
+.br-summary-val { font-size: 18px; font-weight: 700; color: var(--accent); }
+.br-summary-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.br-pair { display: grid; grid-template-columns: 1fr 32px; margin-bottom: 20px; }
+.br-pair-cards { display: flex; flex-direction: column; }
+.br-match-meta { font-size: 9px; color: var(--muted); margin-bottom: 2px; display: flex; gap: 5px; align-items: center; }
+.br-venue { font-size: 8px; color: var(--muted); margin-bottom: 3px; }
+.br-match-gap { height: 20px; }
+.br-match-block { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; cursor: pointer; }
+.br-team-card { height: 40px; padding: 0 10px; display: flex; align-items: center; justify-content: space-between; background: var(--surface); border-bottom: 1px solid var(--border); }
+.br-team-card:last-child { border-bottom: none; }
+.br-team-card.br-winner { background: var(--green-bg); }
+.br-team-card.br-loser { opacity: 0.45; }
+.br-team-card.br-tbd { background: var(--surface2); }
+.br-team-name { font-size: 12px; font-weight: 500; }
+.br-team-name.br-tbd { font-size: 11px; color: var(--muted); font-style: italic; }
+.br-team-pts { font-size: 12px; font-weight: 700; color: var(--amber); }
+.br-team-pts.br-earned { color: var(--green); }
+.br-team-pts.br-lost { color: var(--red); }
+.br-expand-icon { font-size: 10px; color: var(--muted); margin-left: 4px; }
+.br-picks-panel { display: none; background: var(--surface2); border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; padding: 10px; }
+.br-picks-panel.open { display: block; }
+.br-picks-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.br-picks-col-team { font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 5px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+.br-picks-col-team.br-winning { color: var(--green); }
+.br-picks-col-team.br-losing { color: var(--red); opacity: 0.7; }
+.br-pick-name { font-size: 10px; color: var(--text); padding: 2px 0; }
+.br-pick-name.br-correct { color: var(--green); font-weight: 600; }
+.br-pick-name.br-wrong { color: var(--red); opacity: 0.8; }
 .match-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
 .match-date-label { font-size: 10px; color: var(--muted); }
 .match-time { font-size: 10px; color: var(--accent2); font-weight: 600; }
@@ -204,11 +253,12 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 </head>
 <body>
 <div class="header">
-  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated June 27, 9:35 PM ET</span></div>
+  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated June 28, 9:33 AM ET</span></div>
   <div class="tabs">
     <button class="tab active" onclick="showTab('lb',this)">Leaderboard</button>
     <button class="tab" onclick="showTab('gv',this)">Groups</button>
     <button class="tab" onclick="showTab('sc',this)">Schedule</button>
+    <button class="tab" onclick="showTab('br',this)">Bracket</button>
     <button class="tab" onclick="showTab('pv',this)">Players</button>
     <button class="tab" onclick="showTab('rl',this)">Rules</button>
   </div>
@@ -216,6 +266,7 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 <div id="lb" class="view active"></div>
 <div id="gv" class="view"></div>
 <div id="sc" class="view"></div>
+<div id="br" class="view" style="padding:0"></div>
 <div id="pv" class="view"></div>
 <div id="rl" class="view"></div>
 <div class="sheet-bg" id="sheet-bg" onclick="maybeCloseSheet(event)">
@@ -345,8 +396,8 @@ const GROUPS = {
       {home:'🇳🇴 Norway',away:'🇫🇷 France',score:null,date:'Fri, Jun 26',time:'3:00 PM ET',tv:'FOX'},
       {home:'🇸🇳 Senegal',away:'🇮🇶 Iraq',score:'5-0',date:'Fri, Jun 26',time:'3:00 PM ET',tv:'FS1'},
     ]},
-  J:{teams:['🇦🇷 Argentina','🇦🇹 Austria','🇩🇿 Algeria','🇯🇴 Jordan'],result:[1,null,null,4],
-    table:[{team:'🇦🇷 Argentina',p:2,w:2,d:0,l:0,gf:5,ga:0,gd:+5,pts:6},{team:'🇦🇹 Austria',p:2,w:1,d:0,l:1,gf:3,ga:3,gd:0,pts:3},{team:'🇩🇿 Algeria',p:2,w:1,d:0,l:1,gf:2,ga:4,gd:-2,pts:3},{team:'🇯🇴 Jordan',p:2,w:0,d:0,l:2,gf:2,ga:5,gd:-3,pts:0}],
+  J:{teams:['🇦🇷 Argentina','🇦🇹 Austria','🇩🇿 Algeria','🇯🇴 Jordan'],result:[1,2,3,4],
+    table:[{team:'🇦🇷 Argentina',p:3,w:3,d:0,l:0,gf:8,ga:1,gd:+7,pts:9},{team:'🇦🇹 Austria',p:3,w:1,d:1,l:1,gf:6,ga:6,gd:0,pts:4},{team:'🇩🇿 Algeria',p:3,w:1,d:1,l:1,gf:5,ga:7,gd:-2,pts:4},{team:'🇯🇴 Jordan',p:3,w:0,d:0,l:3,gf:3,ga:8,gd:-5,pts:0}],
     matches:[
       {home:'🇦🇷 Argentina',away:'🇩🇿 Algeria',score:'3-0',date:'Tue, Jun 16',time:'9:00 PM ET',tv:'FOX'},
       {home:'🇦🇹 Austria',away:'🇯🇴 Jordan',score:'3-1',date:'Tue, Jun 16',time:'12:00 AM ET',tv:'FS1'},
@@ -397,7 +448,7 @@ const PLAYERS = [
 ];
 
 // Teams confirmed as advancing 3rd place finishers (update as tournament progresses)
-const ADVANCING_3RD = [];
+const ADVANCING_3RD = ['DR Congo','Sweden','Ghana','Ecuador','Bosnia & Herz.','Algeria','Paraguay','Senegal'];
 
 function calcGroupPts(picks,result,group){
   if(!picks || !result) return 0;
@@ -640,7 +691,7 @@ function renderGroupView(){
       const gf = b.gf-a.gf; if(gf) return gf;
       const ga = a.ga-b.ga; if(ga) return ga;
       // Fair play tiebreaker — hardcoded order for known ties
-      const FP = {'Ghana':0,'Ecuador':1,'Algeria':2,'Scotland':3};
+      const FP = {'Ghana':0,'Ecuador':1,'Algeria':2,'Paraguay':3,'Scotland':4};
       const an = countryName(a.team), bn = countryName(b.team);
       const ai = FP[an]!==undefined?FP[an]:99;
       const bi = FP[bn]!==undefined?FP[bn]:99;
@@ -733,9 +784,29 @@ function renderSchedule(){
   document.getElementById('sc').innerHTML=`<div class="sub-tabs">
     <button class="sub-tab active" onclick="setScheduleMode('group',this)">By group</button>
     <button class="sub-tab" onclick="setScheduleMode('date',this)">By date</button>
+    <button class="sub-tab" onclick="setScheduleMode('knockout',this)">Knockout</button>
   </div><div id="schedule-content"></div>`;
   renderScheduleContent();
 }
+
+const R32_SCHEDULE = [
+  {match:73, date:'Sun, Jun 28', time:'3:00 PM ET',  venue:'SoFi Stadium, Inglewood',              home:'🇿🇦 South Africa', away:'🇨🇦 Canada',         tv:'FOX'},
+  {match:76, date:'Mon, Jun 29', time:'1:00 PM ET',  venue:'NRG Stadium, Houston',                 home:'🇧🇷 Brazil',       away:'🇯🇵 Japan',          tv:'FOX'},
+  {match:74, date:'Mon, Jun 29', time:'4:30 PM ET',  venue:'Gillette Stadium, Foxborough',          home:'🇩🇪 Germany',      away:'🇵🇾 Paraguay',       tv:'FOX'},
+  {match:75, date:'Mon, Jun 29', time:'9:00 PM ET',  venue:'Estadio BBVA, Monterrey',              home:'🇳🇱 Netherlands',  away:'🇲🇦 Morocco',        tv:'FOX'},
+  {match:78, date:'Tue, Jun 30', time:'1:00 PM ET',  venue:'AT&T Stadium, Arlington',              home:'🇨🇮 Ivory Coast',  away:'🇳🇴 Norway',         tv:'FOX'},
+  {match:77, date:'Tue, Jun 30', time:'5:00 PM ET',  venue:'MetLife Stadium, East Rutherford',     home:'🇫🇷 France',       away:'🇸🇪 Sweden',         tv:'FOX'},
+  {match:79, date:'Tue, Jun 30', time:'9:00 PM ET',  venue:'Estadio Azteca, Mexico City',          home:'🇲🇽 Mexico',       away:'🇪🇨 Ecuador',        tv:'FOX'},
+  {match:80, date:'Wed, Jul 1',  time:'12:00 PM ET', venue:'Mercedes-Benz Stadium, Atlanta',       home:'🇬🇧 England',      away:'🇨🇩 DR Congo',       tv:'FOX'},
+  {match:82, date:'Wed, Jul 1',  time:'4:00 PM ET',  venue:'Lumen Field, Seattle',                 home:'🇧🇪 Belgium',      away:'🇸🇳 Senegal',        tv:'FS1'},
+  {match:81, date:'Wed, Jul 1',  time:'8:00 PM ET',  venue:"Levi's Stadium, Santa Clara",          home:'🇺🇸 USA',          away:'🇧🇦 Bosnia & Herz.', tv:'FOX'},
+  {match:84, date:'Thu, Jul 2',  time:'3:00 PM ET',  venue:'SoFi Stadium, Inglewood',              home:'🇪🇸 Spain',        away:'🇦🇹 Austria',        tv:'FOX'},
+  {match:83, date:'Thu, Jul 2',  time:'7:00 PM ET',  venue:'BMO Field, Toronto',                   home:'🇵🇹 Portugal',     away:'🇭🇷 Croatia',        tv:'FOX'},
+  {match:85, date:'Thu, Jul 2',  time:'11:00 PM ET', venue:'BC Place, Vancouver',                  home:'🇨🇭 Switzerland',  away:'🇩🇿 Algeria',        tv:'FS1'},
+  {match:88, date:'Fri, Jul 3',  time:'2:00 PM ET',  venue:"AT&T Stadium, Arlington",              home:'🇦🇺 Australia',    away:'🇪🇬 Egypt',          tv:'FOX'},
+  {match:86, date:'Fri, Jul 3',  time:'6:00 PM ET',  venue:'Hard Rock Stadium, Miami Gardens',     home:'🇦🇷 Argentina',    away:'🇨🇻 Cape Verde',     tv:'FOX'},
+  {match:87, date:'Fri, Jul 3',  time:'9:30 PM ET',  venue:'Arrowhead Stadium, Kansas City',       home:'🇨🇴 Colombia',     away:'🇬🇭 Ghana',          tv:'FOX'},
+];
 
 const R32 = [
   {match:73, date:'Sun, Jun 29', time:'3:00 PM ET', venue:'SoFi Stadium, Inglewood', home:'2nd Group A', away:'2nd Group B', tv:'FOX'},
@@ -769,7 +840,7 @@ function renderScheduleContent(){
       GROUPS[g].matches.forEach(m=>{html+=matchBlock(m);});
       html+=`</div>`;
     });
-  } else {
+  } else if(scheduleMode==='date'){
     const TIME_SORT={'12:00 AM ET':0,'1:00 AM ET':1,'12:00 PM ET':12,'1:00 PM ET':13,'3:00 PM ET':15,'4:00 PM ET':16,'5:00 PM ET':17,'6:00 PM ET':18,'7:00 PM ET':19,'8:00 PM ET':20,'8:30 PM ET':20.5,'9:00 PM ET':21,'10:00 PM ET':22,'11:00 PM ET':23};
     const all=[];
     Object.keys(GROUPS).forEach(g=>{GROUPS[g].matches.forEach(m=>{all.push({...m,group:g});});});
@@ -783,8 +854,179 @@ function renderScheduleContent(){
       sorted.forEach(m=>{html+=matchBlock(m);});
       html+=`</div>`;
     });
+  } else if(scheduleMode==='knockout'){
+    const koDateOrder = ['Sun, Jun 28','Mon, Jun 29','Tue, Jun 30','Wed, Jul 1','Thu, Jul 2','Fri, Jul 3'];
+    const byDate = {};
+    R32_SCHEDULE.forEach(m=>{ if(!byDate[m.date]) byDate[m.date]=[]; byDate[m.date].push(m); });
+    koDateOrder.forEach(date=>{
+      if(!byDate[date]) return;
+      html+=`<div class="date-label" style="margin:${html?'14px':'0'} 0 8px">${date}</div>`;
+      byDate[date].sort((a,b)=>a.match-b.match).forEach(m=>{
+        html+=`<div class="ko-card">
+          <div class="ko-team home">${m.home}</div>
+          <div class="ko-center">
+            <div class="ko-vs">vs</div>
+            <div class="ko-meta">${m.time} <span class="ko-badge">${m.tv}</span></div>
+          </div>
+          <div class="ko-team away">${m.away}</div>
+        </div>`;
+      });
+    });
   }
   document.getElementById('schedule-content').innerHTML=html;
+}
+
+// ── BRACKET ──
+const BR_PAIRS = [
+  { r16venue:'Lincoln Financial Field, Philadelphia · Jul 4',
+    matches:[
+      {id:'m74', num:74, date:'Mon, Jun 29', time:'4:30 PM ET', venue:'Gillette Stadium, Foxborough', tv:'FOX', home:'🇩🇪 Germany', away:'🇵🇾 Paraguay', result:null},
+      {id:'m77', num:77, date:'Tue, Jun 30', time:'5:00 PM ET', venue:'MetLife Stadium, East Rutherford', tv:'FOX', home:'🇫🇷 France', away:'🇸🇪 Sweden', result:null},
+    ]},
+  { r16venue:'NRG Stadium, Houston · Jul 4',
+    matches:[
+      {id:'m73', num:73, date:'Sun, Jun 28', time:'3:00 PM ET', venue:'SoFi Stadium, Inglewood', tv:'FOX', home:'🇿🇦 South Africa', away:'🇨🇦 Canada', result:null},
+      {id:'m75', num:75, date:'Mon, Jun 29', time:'9:00 PM ET', venue:'Estadio BBVA, Monterrey', tv:'FOX', home:'🇳🇱 Netherlands', away:'🇲🇦 Morocco', result:null},
+    ]},
+  { r16venue:'AT&T Stadium, Arlington · Jul 6',
+    matches:[
+      {id:'m83', num:83, date:'Thu, Jul 2', time:'7:00 PM ET', venue:'BMO Field, Toronto', tv:'FOX', home:'🇵🇹 Portugal', away:'🇭🇷 Croatia', result:null},
+      {id:'m84', num:84, date:'Thu, Jul 2', time:'3:00 PM ET', venue:'SoFi Stadium, Inglewood', tv:'FOX', home:'🇪🇸 Spain', away:'🇦🇹 Austria', result:null},
+    ]},
+  { r16venue:'Lumen Field, Seattle · Jul 6',
+    matches:[
+      {id:'m81', num:81, date:'Wed, Jul 1', time:'8:00 PM ET', venue:"Levi's Stadium, Santa Clara", tv:'FOX', home:'🇺🇸 USA', away:'🇧🇦 Bosnia & Herz.', result:null},
+      {id:'m82', num:82, date:'Wed, Jul 1', time:'4:00 PM ET', venue:'Lumen Field, Seattle', tv:'FS1', home:'🇧🇪 Belgium', away:'🇸🇳 Senegal', result:null},
+    ]},
+  { r16venue:'MetLife Stadium, East Rutherford · Jul 5',
+    matches:[
+      {id:'m76', num:76, date:'Mon, Jun 29', time:'1:00 PM ET', venue:'NRG Stadium, Houston', tv:'FOX', home:'🇧🇷 Brazil', away:'🇯🇵 Japan', result:null},
+      {id:'m78', num:78, date:'Tue, Jun 30', time:'1:00 PM ET', venue:'AT&T Stadium, Arlington', tv:'FOX', home:'🇨🇮 Ivory Coast', away:'🇳🇴 Norway', result:null},
+    ]},
+  { r16venue:'Estadio Azteca, Mexico City · Jul 5',
+    matches:[
+      {id:'m79', num:79, date:'Tue, Jun 30', time:'9:00 PM ET', venue:'Estadio Azteca, Mexico City', tv:'FOX', home:'🇲🇽 Mexico', away:'🇪🇨 Ecuador', result:null},
+      {id:'m80', num:80, date:'Wed, Jul 1', time:'12:00 PM ET', venue:'Mercedes-Benz Stadium, Atlanta', tv:'FOX', home:'🇬🇧 England', away:'🇨🇩 DR Congo', result:null},
+    ]},
+  { r16venue:'Mercedes-Benz Stadium, Atlanta · Jul 7',
+    matches:[
+      {id:'m86', num:86, date:'Fri, Jul 3', time:'6:00 PM ET', venue:'Hard Rock Stadium, Miami Gardens', tv:'FOX', home:'🇦🇷 Argentina', away:'🇨🇻 Cape Verde', result:null},
+      {id:'m88', num:88, date:'Fri, Jul 3', time:'2:00 PM ET', venue:"AT&T Stadium, Arlington", tv:'FOX', home:'🇦🇺 Australia', away:'🇪🇬 Egypt', result:null},
+    ]},
+  { r16venue:'BC Place, Vancouver · Jul 7',
+    matches:[
+      {id:'m85', num:85, date:'Thu, Jul 2', time:'11:00 PM ET', venue:'BC Place, Vancouver', tv:'FS1', home:'🇨🇭 Switzerland', away:'🇩🇿 Algeria', result:null},
+      {id:'m87', num:87, date:'Fri, Jul 3', time:'9:30 PM ET', venue:'Arrowhead Stadium, Kansas City', tv:'FOX', home:'🇨🇴 Colombia', away:'🇬🇭 Ghana', result:null},
+    ]},
+];
+
+let brRound = 0;
+
+function renderBracket(){
+  const el = document.getElementById('br');
+  let html = `<div class="br-round-tabs">
+    <div class="br-round-tab active" onclick="setBrRound(0,this)">R32 · 10pts</div>
+    <div class="br-round-tab" onclick="setBrRound(1,this)">R16 · 20pts</div>
+    <div class="br-round-tab" onclick="setBrRound(2,this)">QF · 50pts</div>
+    <div class="br-round-tab" onclick="setBrRound(3,this)">SF · 100pts</div>
+    <div class="br-round-tab" onclick="setBrRound(4,this)">Final · 250pts</div>
+  </div>
+  <div class="br-dots">
+    <div class="br-dot active" id="brdot0"></div>
+    <div class="br-dot" id="brdot1"></div>
+    <div class="br-dot" id="brdot2"></div>
+    <div class="br-dot" id="brdot3"></div>
+    <div class="br-dot" id="brdot4"></div>
+  </div>
+  <div id="br-swipe-wrapper" class="br-swipe-wrapper">`;
+
+  // R32 page
+  html += `<div class="br-page">
+    <div class="br-summary">
+      <div class="br-summary-stat"><div class="br-summary-val">—</div><div class="br-summary-label">Correct</div></div>
+      <div class="br-summary-stat"><div class="br-summary-val">—</div><div class="br-summary-label">Wrong</div></div>
+      <div class="br-summary-stat"><div class="br-summary-val">—</div><div class="br-summary-label">Earned</div></div>
+      <div class="br-summary-stat"><div class="br-summary-val">16</div><div class="br-summary-label">Pending</div></div>
+    </div>`;
+
+  BR_PAIRS.forEach((pair, pi) => {
+    const totalH = pair.matches.length * 80 + (pair.matches.length-1)*20 + pair.matches.length*24;
+    const m1h = 68, m2h = totalH - 40;
+    const mid = Math.round((m1h + m2h) / 2);
+    html += `<div class="br-pair"><div class="br-pair-cards">`;
+    pair.matches.forEach((m, mi) => {
+      const res = m.result;
+      const homeClass = res ? (res==='home'?'br-winner':'br-loser') : 'br-tbd';
+      const awayClass = res ? (res==='away'?'br-winner':'br-loser') : 'br-tbd';
+      const homePts = res ? (res==='home'?'10':'0') : '?';
+      const awayPts = res ? (res==='away'?'10':'0') : '?';
+      const homePtsClass = res ? (res==='home'?'br-earned':'br-lost') : '';
+      const awayPtsClass = res ? (res==='away'?'br-earned':'br-lost') : '';
+      if(mi>0) html += `<div class="br-match-gap"></div>`;
+      html += `
+        <div class="br-match-meta">M${m.num} · ${m.date} · ${m.time} <span class="tv-badge">${m.tv}</span></div>
+        <div class="br-venue">${m.venue}</div>
+        <div class="br-match-block" onclick="brToggle('${m.id}')">
+          <div class="br-team-card ${homeClass}"><span class="br-team-name">${m.home} <span class="br-expand-icon" id="bricon-${m.id}">▾</span></span><span class="br-team-pts ${homePtsClass}">${homePts}</span></div>
+          <div class="br-team-card ${awayClass}"><span class="br-team-name">${m.away}</span><span class="br-team-pts ${awayPtsClass}">${awayPts}</span></div>
+        </div>
+        <div class="br-picks-panel" id="brpanel-${m.id}">
+          <div class="br-picks-cols">
+            <div><div class="br-picks-col-team">${m.home}</div><div class="br-pick-name" style="color:var(--muted);font-style:italic">Picks TBD</div></div>
+            <div><div class="br-picks-col-team">${m.away}</div><div class="br-pick-name" style="color:var(--muted);font-style:italic">Picks TBD</div></div>
+          </div>
+        </div>`;
+    });
+    // SVG arm
+    const svgH = totalH + 24;
+    const armColor = '#a3a8ac';
+    html += `</div>
+      <svg width="32" height="${svgH}" viewBox="0 0 32 ${svgH}">
+        <line x1="0" y1="${m1h}" x2="18" y2="${m1h}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+        <line x1="0" y1="${m2h}" x2="18" y2="${m2h}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+        <line x1="18" y1="${m1h}" x2="18" y2="${m2h}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+        <line x1="18" y1="${mid}" x2="32" y2="${mid}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+        <circle cx="18" cy="${mid}" r="3" fill="${armColor}"/>
+        <text x="0" y="${svgH}" font-size="6" fill="var(--muted)" transform="rotate(-90,0,${svgH})" dy="6">→ ${pair.r16venue}</text>
+      </svg>
+    </div>`;
+  });
+
+  html += `</div>`; // end R32 page
+
+  // Placeholder pages for R16-Final
+  ['R16','QF','SF','Final'].forEach(r => {
+    html += `<div class="br-page"><div style="text-align:center;color:var(--muted);padding:60px 20px;font-size:13px">${r} matchups TBD</div></div>`;
+  });
+
+  html += `</div>`; // end swipe wrapper
+  el.innerHTML = html;
+
+  // Touch swipe
+  const sw = document.getElementById('br-swipe-wrapper');
+  let sx = 0;
+  sw.addEventListener('touchstart', e=>{ sx=e.touches[0].clientX; },{passive:true});
+  sw.addEventListener('touchend', e=>{
+    const dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)<40)return;
+    if(dx<0&&brRound<4)setBrRound(brRound+1,null);
+    if(dx>0&&brRound>0)setBrRound(brRound-1,null);
+  });
+}
+
+function setBrRound(idx,el){
+  brRound=idx;
+  document.getElementById('br-swipe-wrapper').style.transform=`translateX(-${idx*100}vw)`;
+  document.querySelectorAll('.br-round-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  document.querySelectorAll('.br-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+}
+
+function brToggle(id){
+  const panel=document.getElementById('brpanel-'+id);
+  const icon=document.getElementById('bricon-'+id);
+  const open=panel.classList.contains('open');
+  panel.classList.toggle('open',!open);
+  if(icon)icon.textContent=open?'▾':'▴';
 }
 
 // PLAYERS
@@ -1121,6 +1363,7 @@ function renderRules(){
 try{renderLeaderboard();}catch(e){console.error('LB error:',e);}
 try{renderGroupView();}catch(e){console.error('GV error:',e);}
 try{renderSchedule();}catch(e){console.error('SC error:',e);}
+try{renderBracket();}catch(e){console.error('BR error:',e);}
 try{renderPlayerView();}catch(e){console.error('PV error:',e);}
 try{renderRules();}catch(e){console.error('RL error:',e);}
 </script>
