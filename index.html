@@ -47,14 +47,14 @@ html { background: var(--bg) !important; }
 .fdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; flex-shrink: 0; vertical-align: middle; }
 
 /* ── LEADERBOARD ── */
-.lb-header-row { display: grid; grid-template-columns: 26px 1fr 40px 40px 40px 48px 48px; gap: 3px; padding: 0 8px; font-size: 9px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+.lb-header-row { display: grid; grid-template-columns: 26px 1fr 40px 40px 40px 48px 40px 48px; gap: 3px; padding: 0 8px; font-size: 9px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
 .lh-sortable { cursor: pointer; user-select: none; transition: color 0.15s; text-align: center; }
 .lh-sortable:hover { color: var(--text); }
 .lh-sortable.lh-active { color: var(--accent); font-weight: 700; }
 .lh-name.lh-sortable { text-align: left; }
 .lb-header-row div { text-align: center; }
 .lb-header-row .lh-name { text-align: left; }
-.lb-card { display: grid; grid-template-columns: 26px 1fr 40px 40px 40px 48px 48px; gap: 3px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 8px; cursor: pointer; transition: border-color 0.15s; margin-bottom: 4px; }
+.lb-card { display: grid; grid-template-columns: 26px 1fr 40px 40px 40px 48px 40px 48px; gap: 3px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 8px; cursor: pointer; transition: border-color 0.15s; margin-bottom: 4px; }
 .lb-card:hover { border-color: var(--accent2); }
 .lb-card.leader { border-color: var(--accent); }
 .lb-rank { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; text-align: center; color: var(--muted); }
@@ -116,9 +116,13 @@ html { background: var(--bg) !important; }
 .br-dots { display: flex; justify-content: center; gap: 6px; padding: 6px 0 10px; }
 .br-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); transition: background 0.2s; }
 .br-dot.active { background: var(--accent); }
-.br-swipe-wrapper { display: flex; transition: transform 0.3s ease; overflow: hidden; }
-.br-page { width: 100vw; padding: 0 12px 20px; flex-shrink: 0; box-sizing: border-box; }
+.br-swipe-wrapper { display: flex; transition: transform 0.3s ease; overflow: hidden; width: 500%; }
+.br-page { width: 20%; padding: 0 12px 20px; flex-shrink: 0; box-sizing: border-box; }
 .br-summary { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 0; margin-bottom: 14px; display: flex; }
+.br-nuggets { margin-bottom: 14px; }
+.br-nugget { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; margin-bottom: 6px; font-size: 11px; line-height: 1.4; color: var(--text); }
+.br-nugget:last-child { margin-bottom: 0; }
+.br-nugget b { color: var(--accent); }
 .br-summary-stat { flex: 1; text-align: center; border-right: 1px solid var(--border); }
 .br-summary-stat:last-child { border-right: none; }
 .br-summary-val { font-size: 18px; font-weight: 700; color: var(--accent); }
@@ -138,6 +142,7 @@ html { background: var(--bg) !important; }
 .br-team-name.br-tbd { font-size: 11px; color: var(--muted); font-style: italic; }
 .br-team-pts { font-size: 12px; font-weight: 700; color: var(--amber); }
 .br-team-pts.br-earned { color: var(--green); }
+.pen-tag { font-size: 8px; font-weight: 700; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 4px; margin-right: 4px; }
 .br-team-pts.br-lost { color: var(--red); }
 .br-expand-icon { font-size: 10px; color: var(--muted); margin-left: 4px; }
 .br-picks-panel { display: none; background: var(--surface2); border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; padding: 10px; }
@@ -253,7 +258,7 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 </head>
 <body>
 <div class="header">
-  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated June 28, 9:33 AM ET</span></div>
+  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated June 30, 11:20 AM ET</span></div>
   <div class="tabs">
     <button class="tab active" onclick="showTab('lb',this)">Leaderboard</button>
     <button class="tab" onclick="showTab('gv',this)">Groups</button>
@@ -429,7 +434,7 @@ const GROUPS = {
 };
 
 const PLAYERS = [
-  {name:'Braydich', picks:{A:[1,3,2,4],B:[3,2,1,4],C:[1,2,4,3],D:[2,4,1,3],E:[1,4,3,2],F:[3,2,1,4],G:[1,2,4,3],H:[1,2,4,3],I:[1,4,3,2],J:[1,3,2,4],K:[1,2,4,3],L:[1,2,4,3]}, thirds:['South Korea','Canada','Paraguay','Netherlands','New Zealand','Austria','Uzbekistan','Panama']},
+  {name:'Braydich', picks:{A:[1,3,2,4],B:[3,2,1,4],C:[1,2,4,3],D:[2,4,1,3],E:[1,4,3,2],F:[3,2,1,4],G:[1,2,4,3],H:[1,2,4,3],I:[1,4,2,3],J:[1,3,2,4],K:[1,2,4,3],L:[1,2,4,3]}, thirds:['South Korea','Canada','Paraguay','Netherlands','New Zealand','Austria','Uzbekistan','Panama']},
   {name:'Chongo', picks:{A:[1,2,4,3],B:[3,1,2,4],C:[2,1,3,4],D:[2,1,4,3],E:[3,2,1,4],F:[1,2,3,4],G:[1,3,2,4],H:[1,2,3,4],I:[2,3,1,4],J:[1,3,2,4],K:[2,1,3,4],L:[2,1,3,4]}, thirds:['Czechia','Canada','Paraguay','Germany','Sweden','Egypt','Senegal','Ghana']},
   {name:'Christian', picks:{A:[1,2,4,3],B:[2,1,3,4],C:[1,2,3,4],D:[1,2,3,4],E:[1,3,2,4],F:[1,2,3,4],G:[1,2,3,4],H:[1,2,3,4],I:[1,3,2,4],J:[1,2,3,4],K:[1,2,3,4],L:[1,2,3,4]}, thirds:['Czechia','Bosnia & Herz.','Scotland','Australia','Ivory Coast','Sweden','Senegal','Algeria']},
   {name:'Jake-Thomas', picks:{A:[1,3,4,2],B:[2,1,3,4],C:[1,2,3,4],D:[2,3,4,1],E:[1,2,3,4],F:[1,2,3,4],G:[1,2,4,3],H:[1,2,3,4],I:[1,2,3,4],J:[1,2,3,4],K:[1,2,3,4],L:[1,2,4,3]}, thirds:['Bosnia & Herz.','Scotland','Turkey','Ecuador','Sweden','Saudi Arabia','DR Congo','Panama']},
@@ -477,7 +482,68 @@ function calcBonusPts(picks,result){if(!result)return 0;if(result.includes(null)
 function calcThirdPts(p){if(!p.thirds||!ADVANCING_3RD.length)return 0;return p.thirds.reduce((s,t)=>s+(ADVANCING_3RD.includes(t)?3:0),0);}
 function playerGroupPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcGroupPts(p.picks[g],GROUPS[g].result,g),0);}
 function playerBonusPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcBonusPts(p.picks[g],GROUPS[g].result),0);}
-function totalPts(p){return playerGroupPts(p)+playerBonusPts(p)+calcThirdPts(p);}
+// KO scoring
+const KO_RESULTS = {73:'away', 74:'away', 75:'away', 76:'home'};
+const KO_PTS_BY_ROUND = {73:10,74:10,75:10,76:10,77:10,78:10,79:10,80:10,81:10,82:10,83:10,84:10,85:10,86:10,87:10,88:10,89:20,90:20,91:20,92:20,93:20,94:20,95:20,96:20,97:50,98:50,99:50,100:50,101:100,102:100,103:50,104:250};
+
+// Returns true if a team code has been eliminated in any played R32/R16/QF/SF match
+function isTeamEliminated(code){
+  if(!code) return false;
+  const allMatches=[];
+  [...BR_PAIRS,...R16_PAIRS].forEach(pair=>pair.matches.forEach(m=>allMatches.push(m)));
+  for(const m of allMatches){
+    if(!m.result) continue;
+    const homeCode=m.homeConfirmed||Object.keys(KO_TEAMS).find(k=>KO_TEAMS[k]===m.home);
+    const awayCode=m.awayConfirmed||Object.keys(KO_TEAMS).find(k=>KO_TEAMS[k]===m.away);
+    if(homeCode===code && m.result==='away') return true;
+    if(awayCode===code && m.result==='home') return true;
+  }
+  return false;
+}
+
+function calcKOPts(p){
+  if(!KO_PICKS||!KO_PICKS[p.name]) return 0;
+  const picks=KO_PICKS[p.name];
+  let pts=0;
+  Object.keys(KO_RESULTS).forEach(mNum=>{
+    const num=parseInt(mNum);
+    const result=KO_RESULTS[num];
+    const pick=picks[num];
+    if(!pick||!result) return;
+    const allPairs=[...BR_PAIRS,...R16_PAIRS];
+    let match=null;
+    allPairs.forEach(pair=>pair.matches.forEach(m=>{if(m.num===num)match=m;}));
+    if(!match) return;
+    const homeCode=match.homeConfirmed||Object.keys(KO_TEAMS).find(k=>KO_TEAMS[k]===match.home);
+    const awayCode=match.awayConfirmed||Object.keys(KO_TEAMS).find(k=>KO_TEAMS[k]===match.away);
+    const pickSide=pick===homeCode?'home':pick===awayCode?'away':null;
+    if(pickSide===result) pts+=(KO_PTS_BY_ROUND[num]||0);
+  });
+  return pts;
+}
+
+function totalPts(p){return playerGroupPts(p)+playerBonusPts(p)+calcThirdPts(p)+calcKOPts(p);}
+
+function calcKOMaxPts(p){
+  if(!KO_PICKS||!KO_PICKS[p.name]) return KNOCKOUT_MAX;
+  const picks=KO_PICKS[p.name];
+  const allMatches=[];
+  [...BR_PAIRS,...R16_PAIRS].forEach(pair=>pair.matches.forEach(m=>allMatches.push(m)));
+  let max=0;
+  Object.keys(picks).map(Number).forEach(mNum=>{
+    const code=picks[mNum];
+    const match=allMatches.find(m=>m.num===mNum);
+    const pts=KO_PTS_BY_ROUND[mNum]||0;
+    if(isTeamEliminated(code)){ return; } // picked team already lost — dead, contributes 0
+    if(!match || !match.result){ max+=pts; return; } // not yet played, still possible
+    const homeCode=match.homeConfirmed||Object.keys(KO_TEAMS).find(k=>KO_TEAMS[k]===match.home);
+    const awayCode=match.awayConfirmed||Object.keys(KO_TEAMS).find(k=>KO_TEAMS[k]===match.away);
+    const pickSide=code===homeCode?'home':code===awayCode?'away':null;
+    if(pickSide===match.result) max+=pts; // correct, locked in
+    // else: pick lost, contributes 0 to max
+  });
+  return max;
+}
 
 // ─── MAX POSSIBLE FINAL SCORE ───────────────────────────────────────────────
 const KNOCKOUT_MAX = 16*10 + 8*20 + 4*50 + 2*100 + 1*250; // 970
@@ -572,7 +638,7 @@ function maxPossibleScore(p){
     bonusMax += maxBonusPts(p.picks[g], GROUPS[g].result);
   });
   const thirdMax = maxThirdPts(p);
-  return groupMax + bonusMax + thirdMax + KNOCKOUT_MAX;
+  return groupMax + bonusMax + thirdMax + calcKOMaxPts(p);
 }
 function sortedPlayers(){return [...PLAYERS].sort((a,b)=>totalPts(b)-totalPts(a));}
 function badgeClass(pick,actual,teamName){
@@ -612,6 +678,7 @@ function lbSortValue(p, key) {
     case 'group': return playerGroupPts(p);
     case 'bonus': return playerBonusPts(p);
     case 'third': return calcThirdPts(p);
+    case 'ko':    return calcKOPts(p);
     case 'total': return totalPts(p);
     case 'max': return maxPossibleScore(p);
     default: return 0;
@@ -648,6 +715,7 @@ function renderLeaderboard(){
     { key:'bonus',  label:'Bonus' },
     { key:'third',  label:'3rd pl.' },
     { key:'total',  label:'Total' },
+    { key:'ko',     label:'KO' },
     { key:'max',    label:'Max' },
   ];
   const arrow = (key) => lbSortKey===key ? (lbSortDir==='asc' ? ' ▲' : ' ▼') : '';
@@ -668,6 +736,8 @@ function renderLeaderboard(){
       <div><div class="lb-name">${p.name}</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:${bar}%"></div></div></div>
       <div class="lb-pts">${gp}</div><div class="lb-pts">${bp>0?'+'+bp:'—'}</div><div class="lb-pts">${calcThirdPts(p)>0?calcThirdPts(p):'—'}</div>
       <div class="lb-total">${tot}</div>
+      <div class="lb-pts">${calcKOPts(p)>0?calcKOPts(p):'—'}</div>
+      <div class="lb-max">${mx}</div>
       <div class="lb-max">${mx}</div>
     </div>`;
   });
@@ -876,17 +946,531 @@ function renderScheduleContent(){
   document.getElementById('schedule-content').innerHTML=html;
 }
 
+const KO_PICKS = {
+  'Braydich': {
+    73: 'CAN',
+    74: 'GER',
+    75: 'NED',
+    76: 'BRA',
+    77: 'FRA',
+    78: 'NOR',
+    79: 'ECU',
+    80: 'ENG',
+    81: 'USA',
+    82: 'BEL',
+    83: 'POR',
+    84: 'ESP',
+    85: 'SUI',
+    86: 'ARG',
+    87: 'COL',
+    88: 'EGY',
+    89: 'FRA',
+    90: 'NED',
+    91: 'BRA',
+    92: 'ENG',
+    93: 'POR',
+    94: 'USA',
+    95: 'ARG',
+    96: 'COL',
+    97: 'FRA',
+    98: 'POR',
+    99: 'BRA',
+    100: 'ARG',
+    101: 'FRA',
+    102: 'ARG',
+    103: 'POR',
+    104: 'FRA',
+  },
+  'Chongo': {
+    73: 'RSA',
+    74: 'GER',
+    75: 'MAR',
+    76: 'JPN',
+    77: 'FRA',
+    78: 'NOR',
+    79: 'MEX',
+    80: 'ENG',
+    81: 'USA',
+    82: 'BEL',
+    83: 'CRO',
+    84: 'ESP',
+    85: 'SUI',
+    86: 'ARG',
+    87: 'COL',
+    88: 'EGY',
+    89: 'FRA',
+    90: 'MAR',
+    91: 'NOR',
+    92: 'MEX',
+    93: 'ESP',
+    94: 'USA',
+    95: 'ARG',
+    96: 'COL',
+    97: 'FRA',
+    98: 'ESP',
+    99: 'NOR',
+    100: 'COL',
+    101: 'FRA',
+    102: 'NOR',
+    103: 'COL',
+    104: 'FRA',
+  },
+  'Christian': {
+    73: 'RSA',
+    74: 'GER',
+    75: 'NED',
+    76: 'BRA',
+    77: 'FRA',
+    78: 'NOR',
+    79: 'MEX',
+    80: 'ENG',
+    81: 'USA',
+    82: 'BEL',
+    83: 'POR',
+    84: 'ESP',
+    85: 'SUI',
+    86: 'ARG',
+    87: 'COL',
+    88: 'EGY',
+    89: 'GER',
+    90: 'NED',
+    91: 'BRA',
+    92: 'ENG',
+    93: 'ESP',
+    94: 'USA',
+    95: 'ARG',
+    96: 'COL',
+    97: 'GER',
+    98: 'ESP',
+    99: 'ENG',
+    100: 'ARG',
+    101: 'ESP',
+    102: 'ARG',
+    103: 'ENG',
+    104: 'ARG',
+  },
+  'Jake-Thomas': {
+    73: 'RSA',
+    74: 'GER',
+    75: 'NED',
+    76: 'BRA',
+    77: 'FRA',
+    78: 'NOR',
+    79: 'MEX',
+    80: 'ENG',
+    81: 'USA',
+    82: 'BEL',
+    83: 'POR',
+    84: 'ESP',
+    85: 'SUI',
+    86: 'ARG',
+    87: 'COL',
+    88: 'EGY',
+    89: 'FRA',
+    90: 'NED',
+    91: 'BRA',
+    92: 'ENG',
+    93: 'ESP',
+    94: 'USA',
+    95: 'ARG',
+    96: 'COL',
+    97: 'FRA',
+    98: 'ESP',
+    99: 'BRA',
+    100: 'ARG',
+    101: 'FRA',
+    102: 'ARG',
+    103: 'ESP',
+    104: 'FRA',
+  },
+  'Jason': {
+    73: 'CAN',
+    74: 'GER',
+    75: 'MAR',
+    76: 'BRA',
+    77: 'FRA',
+    78: 'NOR',
+    79: 'ECU',
+    80: 'ENG',
+    81: 'USA',
+    82: 'SEN',
+    83: 'POR',
+    84: 'ESP',
+    85: 'SUI',
+    86: 'ARG',
+    87: 'COL',
+    88: 'EGY',
+    89: 'FRA',
+    90: 'MAR',
+    91: 'BRA',
+    92: 'ENG',
+    93: 'ESP',
+    94: 'USA',
+    95: 'ARG',
+    96: 'COL',
+    97: 'FRA',
+    98: 'USA',
+    99: 'BRA',
+    100: 'COL',
+    101: 'FRA',
+    102: 'COL',
+    103: 'USA',
+    104: 'FRA',
+  },
+  'Jon K.': {
+    73: 'CAN',
+    74: 'GER',
+    75: 'NED',
+    76: 'BRA',
+    77: 'FRA',
+    78: 'CIV',
+    79: 'MEX',
+    80: 'ENG',
+    81: 'USA',
+    82: 'BEL',
+    83: 'POR',
+    84: 'ESP',
+    85: 'ALG',
+    86: 'ARG',
+    87: 'COL',
+    88: 'AUS',
+    89: 'GER',
+    90: 'NED',
+    91: 'BRA',
+    92: 'ENG',
+    93: 'ESP',
+    94: 'BEL',
+    95: 'ARG',
+    96: 'COL',
+    97: 'NED',
+    98: 'ESP',
+    99: 'BRA',
+    100: 'ARG',
+    101: 'ESP',
+    102: 'BRA',
+    103: 'ARG',
+    104: 'ESP',
+  },
+  'Josh': {
+    73: 'CAN',
+    74: 'GER',
+    75: 'NED',
+    76: 'JPN',
+    77: 'FRA',
+    78: 'NOR',
+    79: 'MEX',
+    80: 'ENG',
+    81: 'USA',
+    82: 'BEL',
+    83: 'POR',
+    84: 'ESP',
+    85: 'SUI',
+    86: 'ARG',
+    87: 'COL',
+    88: 'EGY',
+    89: 'FRA',
+    90: 'NED',
+    91: 'NOR',
+    92: 'ENG',
+    93: 'ESP',
+    94: 'BEL',
+    95: 'ARG',
+    96: 'COL',
+    97: 'FRA',
+    98: 'ESP',
+    99: 'ENG',
+    100: 'ARG',
+    101: 'FRA',
+    102: 'ARG',
+    103: 'ESP',
+    104: 'FRA',
+  },
+  'Julian': {
+    73: 'CAN',
+    74: 'GER',
+    75: 'NED',
+    76: 'BRA',
+    77: 'FRA',
+    78: 'NOR',
+    79: 'MEX',
+    80: 'ENG',
+    81: 'USA',
+    82: 'BEL',
+    83: 'POR',
+    84: 'ESP',
+    85: 'SUI',
+    86: 'ARG',
+    87: 'COL',
+    88: 'AUS',
+    89: 'FRA',
+    90: 'NED',
+    91: 'BRA',
+    92: 'ENG',
+    93: 'ESP',
+    94: 'USA',
+    95: 'ARG',
+    96: 'SUI',
+    97: 'FRA',
+    98: 'ESP',
+    99: 'BRA',
+    100: 'ARG',
+    101: 'FRA',
+    102: 'ARG',
+    103: 'BRA',
+    104: 'FRA',
+  },
+  'Kek': {
+    73: 'CAN',
+    74: 'GER',
+    75: 'NED',
+    76: 'BRA',
+    77: 'FRA',
+    78: 'CIV',
+    79: 'ECU',
+    80: 'ENG',
+    81: 'USA',
+    82: 'BEL',
+    83: 'POR',
+    84: 'ESP',
+    85: 'ALG',
+    86: 'ARG',
+    87: 'COL',
+    88: 'AUS',
+    89: 'GER',
+    90: 'CAN',
+    91: 'BRA',
+    92: 'ENG',
+    93: 'ESP',
+    94: 'USA',
+    95: 'ARG',
+    96: 'COL',
+    97: 'GER',
+    98: 'ESP',
+    99: 'ENG',
+    100: 'ARG',
+    101: 'ESP',
+    102: 'ARG',
+    103: 'GER',
+    104: 'ESP',
+  },
+  'Madigan': {
+    73: 'CAN',
+    74: 'GER',
+    75: 'NED',
+    76: 'BRA',
+    77: 'SWE',
+    78: 'NOR',
+    79: 'MEX',
+    80: 'ENG',
+    81: 'USA',
+    82: 'SEN',
+    83: 'CRO',
+    84: 'ESP',
+    85: 'SUI',
+    86: 'ARG',
+    87: 'COL',
+    88: 'AUS',
+    89: 'GER',
+    90: 'NED',
+    91: 'BRA',
+    92: 'ENG',
+    93: 'ESP',
+    94: 'USA',
+    95: 'ARG',
+    96: 'SUI',
+    97: 'GER',
+    98: 'ESP',
+    99: 'BRA',
+    100: 'SUI',
+    101: 'GER',
+    102: 'BRA',
+    103: 'SUI',
+    104: 'BRA',
+  },
+  'Matt B.': {
+    73: 'CAN',
+    74: 'GER',
+    75: 'NED',
+    76: 'BRA',
+    77: 'FRA',
+    78: 'NOR',
+    79: 'MEX',
+    80: 'ENG',
+    81: 'USA',
+    82: 'BEL',
+    83: 'CRO',
+    84: 'ESP',
+    85: 'SUI',
+    86: 'ARG',
+    87: 'COL',
+    88: 'EGY',
+    89: 'FRA',
+    90: 'NED',
+    91: 'BRA',
+    92: 'ENG',
+    93: 'ESP',
+    94: 'USA',
+    95: 'ARG',
+    96: 'COL',
+    97: 'FRA',
+    98: 'ESP',
+    99: 'BRA',
+    100: 'ARG',
+    101: 'FRA',
+    102: 'ARG',
+    103: 'BRA',
+    104: 'FRA',
+  },
+  'Nick P.': {
+    73: 'CAN',
+    74: 'GER',
+    75: 'NED',
+    76: 'BRA',
+    77: 'FRA',
+    78: 'NOR',
+    79: 'ECU',
+    80: 'ENG',
+    81: 'USA',
+    82: 'SEN',
+    83: 'CRO',
+    84: 'ESP',
+    85: 'SUI',
+    86: 'ARG',
+    87: 'COL',
+    88: 'EGY',
+    89: 'FRA',
+    90: 'NED',
+    91: 'BRA',
+    92: 'ENG',
+    93: 'CRO',
+    94: 'USA',
+    95: 'ARG',
+    96: 'COL',
+    97: 'FRA',
+    98: 'USA',
+    99: 'ENG',
+    100: 'ARG',
+    101: 'FRA',
+    102: 'ENG',
+    103: 'ARG',
+    104: 'FRA',
+  },
+  'Shelley': {
+    73: 'CAN',
+    74: 'GER',
+    75: 'NED',
+    76: 'BRA',
+    77: 'FRA',
+    78: 'NOR',
+    79: 'MEX',
+    80: 'ENG',
+    81: 'USA',
+    82: 'BEL',
+    83: 'CRO',
+    84: 'ESP',
+    85: 'SUI',
+    86: 'ARG',
+    87: 'COL',
+    88: 'EGY',
+    89: 'FRA',
+    90: 'NED',
+    91: 'NOR',
+    92: 'MEX',
+    93: 'ESP',
+    94: 'USA',
+    95: 'ARG',
+    96: 'COL',
+    97: 'FRA',
+    98: 'ESP',
+    99: 'NOR',
+    100: 'ARG',
+    101: 'FRA',
+    102: 'ARG',
+    103: 'ESP',
+    104: 'FRA',
+  },
+  'Suarez': {
+    73: 'CAN',
+    74: 'GER',
+    75: 'MAR',
+    76: 'BRA',
+    77: 'FRA',
+    78: 'NOR',
+    79: 'MEX',
+    80: 'ENG',
+    81: 'USA',
+    82: 'BEL',
+    83: 'POR',
+    84: 'ESP',
+    85: 'SUI',
+    86: 'ARG',
+    87: 'COL',
+    88: 'EGY',
+    89: 'FRA',
+    90: 'MAR',
+    91: 'BRA',
+    92: 'ENG',
+    93: 'ESP',
+    94: 'USA',
+    95: 'ARG',
+    96: 'COL',
+    97: 'FRA',
+    98: 'ESP',
+    99: 'ENG',
+    100: 'COL',
+    101: 'FRA',
+    102: 'ENG',
+    103: 'ESP',
+    104: 'FRA',
+  },
+};
+
+const KO_TEAMS = {
+  'CAN': '🇨🇦 Canada',
+  'RSA': '🇿🇦 South Africa',
+  'GER': '🇩🇪 Germany',
+  'PAR': '🇵🇾 Paraguay',
+  'NED': '🇳🇱 Netherlands',
+  'MAR': '🇲🇦 Morocco',
+  'BRA': '🇧🇷 Brazil',
+  'JPN': '🇯🇵 Japan',
+  'NOR': '🇳🇴 Norway',
+  'CIV': '🇨🇮 Ivory Coast',
+  'FRA': '🇫🇷 France',
+  'SWE': '🇸🇪 Sweden',
+  'MEX': '🇲🇽 Mexico',
+  'ECU': '🇪🇨 Ecuador',
+  'ENG': '🇬🇧 England',
+  'CON': '🇨🇩 DR Congo',
+  'BEL': '🇧🇪 Belgium',
+  'SEN': '🇸🇳 Senegal',
+  'USA': '🇺🇸 USA',
+  'BOS': '🇧🇦 Bosnia & Herz.',
+  'ESP': '🇪🇸 Spain',
+  'AUT': '🇦🇹 Austria',
+  'POR': '🇵🇹 Portugal',
+  'CRO': '🇭🇷 Croatia',
+  'SUI': '🇨🇭 Switzerland',
+  'ALG': '🇩🇿 Algeria',
+  'AUS': '🇦🇺 Australia',
+  'EGY': '🇪🇬 Egypt',
+  'ARG': '🇦🇷 Argentina',
+  'CPV': '🇨🇻 Cape Verde',
+  'COL': '🇨🇴 Colombia',
+  'GHA': '🇬🇭 Ghana',
+};
+
 // ── BRACKET ──
 const BR_PAIRS = [
   { r16venue:'Lincoln Financial Field, Philadelphia · Jul 4',
     matches:[
-      {id:'m74', num:74, date:'Mon, Jun 29', time:'4:30 PM ET', venue:'Gillette Stadium, Foxborough', tv:'FOX', home:'🇩🇪 Germany', away:'🇵🇾 Paraguay', result:null},
+      {id:'m74', num:74, date:'Mon, Jun 29', time:'4:30 PM ET', venue:'Gillette Stadium, Foxborough', tv:'FOX', home:'🇩🇪 Germany', away:'🇵🇾 Paraguay', result:'away', score:'1-1', pen:'3-4'},
       {id:'m77', num:77, date:'Tue, Jun 30', time:'5:00 PM ET', venue:'MetLife Stadium, East Rutherford', tv:'FOX', home:'🇫🇷 France', away:'🇸🇪 Sweden', result:null},
     ]},
   { r16venue:'NRG Stadium, Houston · Jul 4',
     matches:[
-      {id:'m73', num:73, date:'Sun, Jun 28', time:'3:00 PM ET', venue:'SoFi Stadium, Inglewood', tv:'FOX', home:'🇿🇦 South Africa', away:'🇨🇦 Canada', result:null},
-      {id:'m75', num:75, date:'Mon, Jun 29', time:'9:00 PM ET', venue:'Estadio BBVA, Monterrey', tv:'FOX', home:'🇳🇱 Netherlands', away:'🇲🇦 Morocco', result:null},
+      {id:'m73', num:73, date:'Sun, Jun 28', time:'3:00 PM ET', venue:'SoFi Stadium, Inglewood', tv:'FOX', home:'🇿🇦 South Africa', away:'🇨🇦 Canada', result:'away', score:'0-1'},
+      {id:'m75', num:75, date:'Mon, Jun 29', time:'9:00 PM ET', venue:'Estadio BBVA, Monterrey', tv:'FOX', home:'🇳🇱 Netherlands', away:'🇲🇦 Morocco', result:'away', score:'1-1', pen:'2-3'},
     ]},
   { r16venue:'AT&T Stadium, Arlington · Jul 6',
     matches:[
@@ -900,7 +1484,7 @@ const BR_PAIRS = [
     ]},
   { r16venue:'MetLife Stadium, East Rutherford · Jul 5',
     matches:[
-      {id:'m76', num:76, date:'Mon, Jun 29', time:'1:00 PM ET', venue:'NRG Stadium, Houston', tv:'FOX', home:'🇧🇷 Brazil', away:'🇯🇵 Japan', result:null},
+      {id:'m76', num:76, date:'Mon, Jun 29', time:'1:00 PM ET', venue:'NRG Stadium, Houston', tv:'FOX', home:'🇧🇷 Brazil', away:'🇯🇵 Japan', result:'home', score:'2-1'},
       {id:'m78', num:78, date:'Tue, Jun 30', time:'1:00 PM ET', venue:'AT&T Stadium, Arlington', tv:'FOX', home:'🇨🇮 Ivory Coast', away:'🇳🇴 Norway', result:null},
     ]},
   { r16venue:'Estadio Azteca, Mexico City · Jul 5',
@@ -922,6 +1506,76 @@ const BR_PAIRS = [
 
 let brRound = 0;
 
+const R16_PAIRS = [{"r16venue": "Gillette Stadium, Foxborough · QF Jul 9", "matches": [{"id": "m89", "num": 89, "date": "Sat, Jul 5", "time": "5:00 PM ET", "venue": "Lincoln Financial Field, Philadelphia", "tv": "FOX", "home": "\ud83c\uddf5\ud83c\uddfe Paraguay", "away": "W77 (France/Sweden)", "result": null, "score": null, "homeConfirmed": "PAR", "awayConfirmed": null}, {"id": "m90", "num": 90, "date": "Sat, Jul 5", "time": "1:00 PM ET", "venue": "NRG Stadium, Houston", "tv": "FOX", "home": "🇨🇦 Canada", "away": "🇲🇦 Morocco", "result": null, "score": null, "homeConfirmed": "CAN", "awayConfirmed": "MAR"}]}, {"r16venue": "MetLife Stadium, East Rutherford · QF Jul 9", "matches": [{"id": "m91", "num": 91, "date": "Sun, Jul 6", "time": "4:00 PM ET", "venue": "MetLife Stadium, East Rutherford", "tv": "FOX", "home": "\ud83c\udde7\ud83c\uddf7 Brazil", "away": "W78 (Ivory Coast/Norway)", "result": null, "score": null, "homeConfirmed": "BRA", "awayConfirmed": null}, {"id": "m92", "num": 92, "date": "Sun, Jul 6", "time": "8:00 PM ET", "venue": "Estadio Azteca, Mexico City", "tv": "FOX", "home": "W79 (Mexico/Ecuador)", "away": "W80 (England/DR Congo)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}]}, {"r16venue": "AT&T Stadium, Arlington · QF Jul 10", "matches": [{"id": "m93", "num": 93, "date": "Mon, Jul 7", "time": "3:00 PM ET", "venue": "AT&T Stadium, Arlington", "tv": "FOX", "home": "W83 (Portugal/Croatia)", "away": "W84 (Spain/Austria)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}, {"id": "m94", "num": 94, "date": "Mon, Jul 7", "time": "8:00 PM ET", "venue": "Lumen Field, Seattle", "tv": "FOX", "home": "W81 (USA/Bosnia)", "away": "W82 (Belgium/Senegal)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}]}, {"r16venue": "BC Place, Vancouver · QF Jul 10", "matches": [{"id": "m95", "num": 95, "date": "Tue, Jul 8", "time": "12:00 PM ET", "venue": "Mercedes-Benz Stadium, Atlanta", "tv": "FOX", "home": "W86 (Argentina/Cape Verde)", "away": "W88 (Australia/Egypt)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}, {"id": "m96", "num": 96, "date": "Tue, Jul 8", "time": "4:00 PM ET", "venue": "BC Place, Vancouver", "tv": "FOX", "home": "W85 (Switzerland/Algeria)", "away": "W87 (Colombia/Ghana)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}]}];
+
+function buildPicksPanel(m, res) {
+  const homeCode = Object.keys(KO_TEAMS).find(k => KO_TEAMS[k] === m.home);
+  const awayCode = Object.keys(KO_TEAMS).find(k => KO_TEAMS[k] === m.away);
+  const homePickers = [], awayPickers = [];
+  Object.keys(KO_PICKS).forEach(player => {
+    const code = KO_PICKS[player][m.num];
+    if (!code) return;
+    if (code === homeCode) homePickers.push(player);
+    else if (code === awayCode) awayPickers.push(player);
+  });
+  const homeWon = res === 'home', awayWon = res === 'away';
+  const row = (name, won, lost) => {
+    const cls = won ? 'br-correct' : lost ? 'br-wrong' : '';
+    const pre = won ? '✓ ' : lost ? '✗ ' : '';
+    return `<div class="br-pick-name ${cls}">${pre}${name}</div>`;
+  };
+  const hCls = homeWon ? 'br-winning' : awayWon ? 'br-losing' : '';
+  const aCls = awayWon ? 'br-winning' : homeWon ? 'br-losing' : '';
+  return `<div class="br-picks-cols">
+    <div>
+      <div class="br-picks-col-team ${hCls}">${m.home}</div>
+      ${homePickers.length ? homePickers.map(n=>row(n,homeWon,awayWon)).join('') : '<div class="br-pick-name" style="color:var(--muted);font-style:italic">—</div>'}
+    </div>
+    <div>
+      <div class="br-picks-col-team ${aCls}">${m.away}</div>
+      ${awayPickers.length ? awayPickers.map(n=>row(n,awayWon,homeWon)).join('') : '<div class="br-pick-name" style="color:var(--muted);font-style:italic">—</div>'}
+    </div>
+  </div>`;
+}
+
+function buildR16PicksPanel(m, res) {
+  // For R16, picks are stored by match number
+  const homePickers = [], awayPickers = [];
+  Object.keys(KO_PICKS).forEach(player => {
+    const code = KO_PICKS[player][m.num];
+    if (!code) return;
+    const pickName = KO_TEAMS[code] || code;
+    // Check if pick matches confirmed home or away team
+    if (m.homeConfirmed && code === m.homeConfirmed) homePickers.push(player);
+    else if (m.awayConfirmed && code === m.awayConfirmed) awayPickers.push(player);
+    else {
+      // Match by team name in the home/away string
+      if (m.home.includes(pickName.replace(/^[^\s]+\s/,''))) homePickers.push(player);
+      else awayPickers.push(player);
+    }
+  });
+  const homeWon = res === 'home', awayWon = res === 'away';
+  const row = (name, won, lost) => {
+    const cls = won ? 'br-correct' : lost ? 'br-wrong' : '';
+    const pre = won ? '✓ ' : lost ? '✗ ' : '';
+    return `<div class="br-pick-name ${cls}">${pre}${name}</div>`;
+  };
+  const hCls = homeWon ? 'br-winning' : awayWon ? 'br-losing' : '';
+  const aCls = awayWon ? 'br-winning' : homeWon ? 'br-losing' : '';
+  const homeName = m.homeConfirmed ? (KO_TEAMS[m.homeConfirmed]||m.home) : m.home;
+  const awayName = m.awayConfirmed ? (KO_TEAMS[m.awayConfirmed]||m.away) : m.away;
+  return `<div class="br-picks-cols">
+    <div>
+      <div class="br-picks-col-team ${hCls}">${homeName}</div>
+      ${homePickers.length ? homePickers.map(n=>row(n,homeWon,awayWon)).join('') : '<div class="br-pick-name" style="color:var(--muted);font-style:italic">—</div>'}
+    </div>
+    <div>
+      <div class="br-picks-col-team ${aCls}">${awayName}</div>
+      ${awayPickers.length ? awayPickers.map(n=>row(n,awayWon,homeWon)).join('') : '<div class="br-pick-name" style="color:var(--muted);font-style:italic">—</div>'}
+    </div>
+  </div>`;
+}
+
 function renderBracket(){
   const el = document.getElementById('br');
   let html = `<div class="br-round-tabs">
@@ -942,11 +1596,10 @@ function renderBracket(){
 
   // R32 page
   html += `<div class="br-page">
-    <div class="br-summary">
-      <div class="br-summary-stat"><div class="br-summary-val">—</div><div class="br-summary-label">Correct</div></div>
-      <div class="br-summary-stat"><div class="br-summary-val">—</div><div class="br-summary-label">Wrong</div></div>
-      <div class="br-summary-stat"><div class="br-summary-val">—</div><div class="br-summary-label">Earned</div></div>
-      <div class="br-summary-stat"><div class="br-summary-val">16</div><div class="br-summary-label">Pending</div></div>
+    <div class="br-nuggets">
+      <div class="br-nugget">🔥 Biggest swing left: <b>Portugal vs Croatia</b> — closest split in the round (9 Portugal, 5 Croatia)</div>
+      <div class="br-nugget">📊 Mexico/Ecuador and Australia/Egypt are next-closest at 10-4 splits</div>
+      <div class="br-nugget">🎲 Lone contrarian bet alive: only 1 player has <b>Sweden</b> upsetting France</div>
     </div>`;
 
   BR_PAIRS.forEach((pair, pi) => {
@@ -958,24 +1611,22 @@ function renderBracket(){
       const res = m.result;
       const homeClass = res ? (res==='home'?'br-winner':'br-loser') : 'br-tbd';
       const awayClass = res ? (res==='away'?'br-winner':'br-loser') : 'br-tbd';
-      const homePts = res ? (res==='home'?'10':'0') : '?';
-      const awayPts = res ? (res==='away'?'10':'0') : '?';
+      const scoreStr = m.score || null;
+      const homePts = scoreStr ? scoreStr.split('-')[0] : '?';
+      const awayPts = scoreStr ? scoreStr.split('-')[1] : '?';
       const homePtsClass = res ? (res==='home'?'br-earned':'br-lost') : '';
       const awayPtsClass = res ? (res==='away'?'br-earned':'br-lost') : '';
+      const homePenTag = (m.pen && res==='home') ? `<span class="pen-tag">PEN ${m.pen.split('-')[1]}-${m.pen.split('-')[0]}</span>` : '';
+      const awayPenTag = (m.pen && res==='away') ? `<span class="pen-tag">PEN ${m.pen.split('-')[1]}-${m.pen.split('-')[0]}</span>` : '';
       if(mi>0) html += `<div class="br-match-gap"></div>`;
       html += `
         <div class="br-match-meta">M${m.num} · ${m.date} · ${m.time} <span class="tv-badge">${m.tv}</span></div>
         <div class="br-venue">${m.venue}</div>
         <div class="br-match-block" onclick="brToggle('${m.id}')">
-          <div class="br-team-card ${homeClass}"><span class="br-team-name">${m.home} <span class="br-expand-icon" id="bricon-${m.id}">▾</span></span><span class="br-team-pts ${homePtsClass}">${homePts}</span></div>
-          <div class="br-team-card ${awayClass}"><span class="br-team-name">${m.away}</span><span class="br-team-pts ${awayPtsClass}">${awayPts}</span></div>
+          <div class="br-team-card ${homeClass}"><span class="br-team-name">${m.home} <span class="br-expand-icon" id="bricon-${m.id}">▾</span></span><span class="br-team-pts ${homePtsClass}">${homePenTag}${homePts}</span></div>
+          <div class="br-team-card ${awayClass}"><span class="br-team-name">${m.away}</span><span class="br-team-pts ${awayPtsClass}">${awayPenTag}${awayPts}</span></div>
         </div>
-        <div class="br-picks-panel" id="brpanel-${m.id}">
-          <div class="br-picks-cols">
-            <div><div class="br-picks-col-team">${m.home}</div><div class="br-pick-name" style="color:var(--muted);font-style:italic">Picks TBD</div></div>
-            <div><div class="br-picks-col-team">${m.away}</div><div class="br-pick-name" style="color:var(--muted);font-style:italic">Picks TBD</div></div>
-          </div>
-        </div>`;
+        <div class="br-picks-panel" id="brpanel-${m.id}">${buildPicksPanel(m, res)}</div>`;
     });
     // SVG arm
     const svgH = totalH + 24;
@@ -987,19 +1638,67 @@ function renderBracket(){
         <line x1="18" y1="${m1h}" x2="18" y2="${m2h}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
         <line x1="18" y1="${mid}" x2="32" y2="${mid}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
         <circle cx="18" cy="${mid}" r="3" fill="${armColor}"/>
-        <text x="0" y="${svgH}" font-size="6" fill="var(--muted)" transform="rotate(-90,0,${svgH})" dy="6">→ ${pair.r16venue}</text>
       </svg>
     </div>`;
   });
 
   html += `</div>`; // end R32 page
 
-  // Placeholder pages for R16-Final
-  ['R16','QF','SF','Final'].forEach(r => {
-    html += `<div class="br-page"><div style="text-align:center;color:var(--muted);padding:60px 20px;font-size:13px">${r} matchups TBD</div></div>`;
+  // R16 page
+  html += `<div class="br-page">
+    <div class="br-nuggets">
+      <div class="br-nugget">⏳ Matchups lock in once R32 wraps — check back for the real splits</div>
+    </div>`;
+
+  R16_PAIRS.forEach((pair, pi) => {
+    const totalH = pair.matches.length * 80 + (pair.matches.length-1)*20 + pair.matches.length*24;
+    const m1h = 68, m2h = totalH - 40;
+    const mid = Math.round((m1h + m2h) / 2);
+    html += `<div class="br-pair"><div class="br-pair-cards">`;
+    pair.matches.forEach((m, mi) => {
+      const res = m.result;
+      const homeClass = res ? (res==='home'?'br-winner':'br-loser') : 'br-tbd';
+      const awayClass = res ? (res==='away'?'br-winner':'br-loser') : 'br-tbd';
+      const scoreStr = m.score || null;
+      const homePts = scoreStr ? scoreStr.split('-')[0] : '?';
+      const awayPts = scoreStr ? scoreStr.split('-')[1] : '?';
+      const homePtsClass = res ? (res==='home'?'br-earned':'br-lost') : '';
+      const awayPtsClass = res ? (res==='away'?'br-earned':'br-lost') : '';
+      const homePenTag = (m.pen && res==='home') ? `<span class="pen-tag">PEN ${m.pen.split('-')[1]}-${m.pen.split('-')[0]}</span>` : '';
+      const awayPenTag = (m.pen && res==='away') ? `<span class="pen-tag">PEN ${m.pen.split('-')[1]}-${m.pen.split('-')[0]}</span>` : '';
+      const homeName = m.homeConfirmed ? (KO_TEAMS[m.homeConfirmed]||m.home) : m.home;
+      const awayName = m.awayConfirmed ? (KO_TEAMS[m.awayConfirmed]||m.away) : m.away;
+      const homeTbd = !m.homeConfirmed;
+      const awayTbd = !m.awayConfirmed;
+      if(mi>0) html += `<div class="br-match-gap"></div>`;
+      html += `
+        <div class="br-match-meta">M${m.num} · ${m.date} · ${m.time} <span class="tv-badge">${m.tv}</span></div>
+        <div class="br-venue">${m.venue}</div>
+        <div class="br-match-block" onclick="brToggle('${m.id}')">
+          <div class="br-team-card ${homeClass}"><span class="br-team-name${homeTbd?' br-tbd':''}">${homeName} <span class="br-expand-icon" id="bricon-${m.id}">▾</span></span><span class="br-team-pts ${homePtsClass}">${homePenTag}${homePts}</span></div>
+          <div class="br-team-card ${awayClass}"><span class="br-team-name${awayTbd?' br-tbd':''}">${awayName}</span><span class="br-team-pts ${awayPtsClass}">${awayPenTag}${awayPts}</span></div>
+        </div>
+        <div class="br-picks-panel" id="brpanel-${m.id}">${buildR16PicksPanel(m, res)}</div>`;
+    });
+    const svgH = totalH + 24;
+    const armColor = '#a3a8ac';
+    html += `</div>
+      <svg width="32" height="${svgH}" viewBox="0 0 32 ${svgH}">
+        <line x1="0" y1="${m1h}" x2="18" y2="${m1h}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+        <line x1="0" y1="${m2h}" x2="18" y2="${m2h}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+        <line x1="18" y1="${m1h}" x2="18" y2="${m2h}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+        <line x1="18" y1="${mid}" x2="32" y2="${mid}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+        <circle cx="18" cy="${mid}" r="3" fill="${armColor}"/>
+      </svg>
+    </div>`;
   });
 
-  html += `</div>`; // end swipe wrapper
+  html += `</div>`; // end R16 page
+
+  // QF, SF, Final placeholders
+  ['QF · Jul 9-11','SF · Jul 14-15','Final · Jul 19'].forEach(r => {
+    html += `<div class="br-page"><div style="text-align:center;color:var(--muted);padding:60px 20px;font-size:13px">${r} — TBD</div></div>`;
+  });
   el.innerHTML = html;
 
   // Touch swipe
@@ -1016,7 +1715,7 @@ function renderBracket(){
 
 function setBrRound(idx,el){
   brRound=idx;
-  document.getElementById('br-swipe-wrapper').style.transform=`translateX(-${idx*100}vw)`;
+  document.getElementById('br-swipe-wrapper').style.transform=`translateX(-${idx*20}%)`;
   document.querySelectorAll('.br-round-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
   document.querySelectorAll('.br-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
 }
@@ -1064,7 +1763,7 @@ function renderPlayerDetail(){
     <div class="score-card"><div class="score-card-label">Total</div><div class="score-card-val">${tot}</div></div>
     <div class="score-card"><div class="score-card-label">Rank</div><div class="score-card-val">${rank} of ${PLAYERS.length}</div></div>
     <div class="score-card"><div class="score-card-label">Group + Bonus + 3rd</div><div class="score-card-val">${gp+bp+calcThirdPts(p1)}</div></div>
-    <div class="score-card"><div class="score-card-label">KO pts</div><div class="score-card-val">—</div></div>
+    <div class="score-card"><div class="score-card-label">KO pts</div><div class="score-card-val">${calcKOPts(p1)||'—'}</div></div>
   </div>`;
 
   // Max Possible Final Score breakdown — solo view only
@@ -1075,15 +1774,60 @@ function renderPlayerDetail(){
       bonusMaxTotal += maxBonusPts(p1.picks[g], GROUPS[g].result);
     });
     const thirdMaxTotal = maxThirdPts(p1);
-    const grandMax = groupMaxTotal + bonusMaxTotal + thirdMaxTotal + KNOCKOUT_MAX;
+    const koMaxTotal = calcKOMaxPts(p1);
+    const grandMax = groupMaxTotal + bonusMaxTotal + thirdMaxTotal + koMaxTotal;
     html+=`<div class="analytic-card" style="margin-bottom:16px;border-color:var(--accent2)">
       <div class="analytic-title">Max Possible Final Score</div>
-      <div class="analytic-row"><span>Group picks (best case)</span><span class="analytic-val good">${groupMaxTotal}</span></div>
-      <div class="analytic-row"><span>Perfect group bonuses (best case)</span><span class="analytic-val good">${bonusMaxTotal}</span></div>
-      <div class="analytic-row"><span>3rd place picks (best case)</span><span class="analytic-val good">${thirdMaxTotal}</span></div>
-      <div class="analytic-row"><span>Knockout stage (full ceiling)</span><span class="analytic-val good">${KNOCKOUT_MAX}</span></div>
+      <div class="analytic-row"><span>Group picks</span><span class="analytic-val good">${groupMaxTotal}</span></div>
+      <div class="analytic-row"><span>Perfect group bonuses</span><span class="analytic-val good">${bonusMaxTotal}</span></div>
+      <div class="analytic-row"><span>3rd place picks</span><span class="analytic-val good">${thirdMaxTotal}</span></div>
+      <div class="analytic-row"><span>Knockout stage</span><span class="analytic-val good">${koMaxTotal}</span></div>
       <div class="analytic-row" style="border-top:1px solid var(--border);margin-top:4px;padding-top:8px"><span style="font-weight:600">Maximum Final Score</span><span class="analytic-val neutral" style="font-size:18px">${grandMax}</span></div>
     </div>`;
+  }
+
+  // Knockout Picks — solo view only, if player has bracket picks entered
+  if(!isCompare && KO_PICKS[p1.name]){
+    const picks = KO_PICKS[p1.name];
+    const allMatches = [];
+    [...BR_PAIRS, ...R16_PAIRS].forEach(pair=>pair.matches.forEach(m=>allMatches.push(m)));
+    // Group by round
+    const roundLabels = {73:'Round of 32',89:'Round of 16',97:'Quarterfinals',101:'Semifinals',103:'3rd Place Playoff',104:'Final'};
+    const roundPts = {73:10,89:20,97:50,101:100,103:50,104:250};
+    let currentRoundStart = null;
+    html+=`<div class="sec-label" style="margin-bottom:8px">Knockout Picks</div>`;
+    Object.keys(picks).map(Number).sort((a,b)=>a-b).forEach(mNum=>{
+      if(roundLabels[mNum]!==undefined){
+        if(currentRoundStart!==null) html+=`</div>`;
+        html+=`<div class="analytic-card" style="margin-bottom:10px"><div class="analytic-title">${roundLabels[mNum]} · ${roundPts[mNum]}pts each</div>`;
+        currentRoundStart=mNum;
+      }
+      const code = picks[mNum];
+      const teamName = KO_TEAMS[code] || code;
+      const match = allMatches.find(m=>m.num===mNum);
+      let state='open', resultLabel='Pending';
+      if(isTeamEliminated(code)){
+        state='miss'; resultLabel='Eliminated';
+      } else if(match){
+        const homeCode = match.homeConfirmed || Object.keys(KO_TEAMS).find(k=>KO_TEAMS[k]===match.home);
+        const awayCode = match.awayConfirmed || Object.keys(KO_TEAMS).find(k=>KO_TEAMS[k]===match.away);
+        const pickSide = code===homeCode?'home':code===awayCode?'away':null;
+        if(match.result && pickSide){
+          state = pickSide===match.result ? 'hit' : 'miss';
+          resultLabel = match.score || (match.result==='home'?match.home:match.away);
+        } else if(match.result){
+          state='miss'; resultLabel = match.score || '';
+        }
+      }
+      const cls = state==='hit'?'bd-hit':state==='miss'?'bd-miss':'bd-open';
+      const pts = KO_PTS_BY_ROUND[mNum] || roundPts[currentRoundStart] || 10;
+      let ptsDisplay;
+      if(state==='hit') ptsDisplay = `<span class="bd-icon bd-icon-hit">✓</span> ${pts}`;
+      else if(state==='miss') ptsDisplay = `<span class="bd-icon bd-icon-miss">✗</span> ${pts}`;
+      else ptsDisplay = `${pts}`;
+      html+=`<div class="bd-row ${cls}"><span class="bd-label">M${mNum} · ${teamName}</span><span class="bd-pts">${ptsDisplay}</span></div>`;
+    });
+    if(currentRoundStart!==null) html+=`</div>`;
   }
 
   // 3rd Place Pick Breakdown — solo view only
@@ -1353,6 +2097,7 @@ function renderRules(){
       <div class="rules-row"><span class="rules-row-label">Round of 16</span><span class="rules-row-val">20 pts</span></div>
       <div class="rules-row"><span class="rules-row-label">Quarterfinals</span><span class="rules-row-val">50 pts</span></div>
       <div class="rules-row"><span class="rules-row-label">Semifinals</span><span class="rules-row-val">100 pts</span></div>
+      <div class="rules-row"><span class="rules-row-label">3rd Place Playoff</span><span class="rules-row-val">50 pts</span></div>
       <div class="rules-row"><span class="rules-row-label">Winner</span><span class="rules-row-val">250 pts</span></div>
       <div class="rules-note">The full knockout bracket must be filled out before the knockout stage begins.</div>
     </div>
