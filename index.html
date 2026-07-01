@@ -47,21 +47,21 @@ html { background: var(--bg) !important; }
 .fdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; flex-shrink: 0; vertical-align: middle; }
 
 /* ── LEADERBOARD ── */
-.lb-header-row { display: grid; grid-template-columns: 26px 1fr 40px 40px 40px 48px 40px 48px; gap: 3px; padding: 0 8px; font-size: 9px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+.lb-header-row { display: grid; grid-template-columns: 26px 1fr 36px 36px 36px 36px 50px 50px; gap: 2px; padding: 0 8px; font-size: 9px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
 .lh-sortable { cursor: pointer; user-select: none; transition: color 0.15s; text-align: center; }
 .lh-sortable:hover { color: var(--text); }
 .lh-sortable.lh-active { color: var(--accent); font-weight: 700; }
 .lh-name.lh-sortable { text-align: left; }
 .lb-header-row div { text-align: center; }
 .lb-header-row .lh-name { text-align: left; }
-.lb-card { display: grid; grid-template-columns: 26px 1fr 40px 40px 40px 48px 40px 48px; gap: 3px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 8px; cursor: pointer; transition: border-color 0.15s; margin-bottom: 4px; }
+.lb-card { display: grid; grid-template-columns: 26px 1fr 36px 36px 36px 36px 50px 50px; gap: 2px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 9px 8px; cursor: pointer; transition: border-color 0.15s; margin-bottom: 4px; }
 .lb-card:hover { border-color: var(--accent2); }
 .lb-card.leader { border-color: var(--accent); }
 .lb-rank { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; text-align: center; color: var(--muted); }
 .lb-rank.r1 { color: var(--accent); }
 .lb-rank.r2 { color: #b0b8c8; }
 .lb-rank.r3 { color: #9a8060; }
-.lb-name { font-weight: 500; font-size: 13px; color: var(--text); }
+.lb-name { font-weight: 500; font-size: 12px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .lb-bar-wrap { height: 2px; background: var(--border); border-radius: 1px; margin-top: 3px; }
 .lb-bar { height: 2px; background: var(--accent); border-radius: 1px; opacity: 0.5; }
 .lb-max { text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; color: var(--green); }
@@ -258,7 +258,7 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 </head>
 <body>
 <div class="header">
-  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated June 30, 11:20 AM ET</span></div>
+  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated July 1, 6:19 PM ET</span></div>
   <div class="tabs">
     <button class="tab active" onclick="showTab('lb',this)">Leaderboard</button>
     <button class="tab" onclick="showTab('gv',this)">Groups</button>
@@ -483,7 +483,7 @@ function calcThirdPts(p){if(!p.thirds||!ADVANCING_3RD.length)return 0;return p.t
 function playerGroupPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcGroupPts(p.picks[g],GROUPS[g].result,g),0);}
 function playerBonusPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcBonusPts(p.picks[g],GROUPS[g].result),0);}
 // KO scoring
-const KO_RESULTS = {73:'away', 74:'away', 75:'away', 76:'home', 78:'away'};
+const KO_RESULTS = {73:'away', 74:'away', 75:'away', 76:'home', 77:'home', 78:'away', 79:'home'};
 const KO_PTS_BY_ROUND = {73:10,74:10,75:10,76:10,77:10,78:10,79:10,80:10,81:10,82:10,83:10,84:10,85:10,86:10,87:10,88:10,89:20,90:20,91:20,92:20,93:20,94:20,95:20,96:20,97:50,98:50,99:50,100:50,101:100,102:100,103:50,104:250};
 
 // Returns true if a team code has been eliminated in any played R32/R16/QF/SF match
@@ -634,8 +634,8 @@ function thirdPickState(teamName){
 function maxPossibleScore(p){
   let groupMax=0, bonusMax=0;
   Object.keys(GROUPS).forEach(g=>{
-    groupMax += maxGroupPts(p.picks[g], GROUPS[g].result, g);
-    bonusMax += maxBonusPts(p.picks[g], GROUPS[g].result);
+    groupMax += calcGroupPts(p.picks[g], GROUPS[g].result, g);
+    bonusMax += calcBonusPts(p.picks[g], GROUPS[g].result);
   });
   const thirdMax = maxThirdPts(p);
   return groupMax + bonusMax + thirdMax + calcKOMaxPts(p);
@@ -1464,7 +1464,7 @@ const BR_PAIRS = [
   { r16venue:'Lincoln Financial Field, Philadelphia · Jul 4',
     matches:[
       {id:'m74', num:74, date:'Mon, Jun 29', time:'4:30 PM ET', venue:'Gillette Stadium, Foxborough', tv:'FOX', home:'🇩🇪 Germany', away:'🇵🇾 Paraguay', result:'away', score:'1-1', pen:'3-4'},
-      {id:'m77', num:77, date:'Tue, Jun 30', time:'5:00 PM ET', venue:'MetLife Stadium, East Rutherford', tv:'FOX', home:'🇫🇷 France', away:'🇸🇪 Sweden', result:null},
+      {id:'m77', num:77, date:'Tue, Jun 30', time:'5:00 PM ET', venue:'MetLife Stadium, East Rutherford', tv:'FOX', home:'🇫🇷 France', away:'🇸🇪 Sweden', result:'home', score:'3-0'},
     ]},
   { r16venue:'NRG Stadium, Houston · Jul 4',
     matches:[
@@ -1488,7 +1488,7 @@ const BR_PAIRS = [
     ]},
   { r16venue:'Estadio Azteca, Mexico City · Jul 5',
     matches:[
-      {id:'m79', num:79, date:'Tue, Jun 30', time:'9:00 PM ET', venue:'Estadio Azteca, Mexico City', tv:'FOX', home:'🇲🇽 Mexico', away:'🇪🇨 Ecuador', result:null},
+      {id:'m79', num:79, date:'Tue, Jun 30', time:'9:00 PM ET', venue:'Estadio Azteca, Mexico City', tv:'FOX', home:'🇲🇽 Mexico', away:'🇪🇨 Ecuador', result:'home', score:'2-0'},
       {id:'m80', num:80, date:'Wed, Jul 1', time:'12:00 PM ET', venue:'Mercedes-Benz Stadium, Atlanta', tv:'FOX', home:'🇬🇧 England', away:'🇨🇩 DR Congo', result:null},
     ]},
   { r16venue:'Mercedes-Benz Stadium, Atlanta · Jul 7',
@@ -1505,7 +1505,7 @@ const BR_PAIRS = [
 
 let brRound = 0;
 
-const R16_PAIRS = [{"r16venue": "Gillette Stadium, Foxborough · QF Jul 9", "matches": [{"id": "m89", "num": 89, "date": "Sat, Jul 5", "time": "5:00 PM ET", "venue": "Lincoln Financial Field, Philadelphia", "tv": "FOX", "home": "\ud83c\uddf5\ud83c\uddfe Paraguay", "away": "W77 (France/Sweden)", "result": null, "score": null, "homeConfirmed": "PAR", "awayConfirmed": null}, {"id": "m90", "num": 90, "date": "Sat, Jul 5", "time": "1:00 PM ET", "venue": "NRG Stadium, Houston", "tv": "FOX", "home": "🇨🇦 Canada", "away": "🇲🇦 Morocco", "result": null, "score": null, "homeConfirmed": "CAN", "awayConfirmed": "MAR"}]}, {"r16venue": "MetLife Stadium, East Rutherford · QF Jul 9", "matches": [{"id": "m91", "num": 91, "date": "Sun, Jul 6", "time": "4:00 PM ET", "venue": "MetLife Stadium, East Rutherford", "tv": "FOX", "home": "\ud83c\udde7\ud83c\uddf7 Brazil", "away": "\ud83c\uddf3\ud83c\uddf4 Norway", "result": null, "score": null, "homeConfirmed": "BRA", "awayConfirmed": "NOR"}, {"id": "m92", "num": 92, "date": "Sun, Jul 6", "time": "8:00 PM ET", "venue": "Estadio Azteca, Mexico City", "tv": "FOX", "home": "W79 (Mexico/Ecuador)", "away": "W80 (England/DR Congo)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}]}, {"r16venue": "AT&T Stadium, Arlington · QF Jul 10", "matches": [{"id": "m93", "num": 93, "date": "Mon, Jul 7", "time": "3:00 PM ET", "venue": "AT&T Stadium, Arlington", "tv": "FOX", "home": "W83 (Portugal/Croatia)", "away": "W84 (Spain/Austria)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}, {"id": "m94", "num": 94, "date": "Mon, Jul 7", "time": "8:00 PM ET", "venue": "Lumen Field, Seattle", "tv": "FOX", "home": "W81 (USA/Bosnia)", "away": "W82 (Belgium/Senegal)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}]}, {"r16venue": "BC Place, Vancouver · QF Jul 10", "matches": [{"id": "m95", "num": 95, "date": "Tue, Jul 8", "time": "12:00 PM ET", "venue": "Mercedes-Benz Stadium, Atlanta", "tv": "FOX", "home": "W86 (Argentina/Cape Verde)", "away": "W88 (Australia/Egypt)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}, {"id": "m96", "num": 96, "date": "Tue, Jul 8", "time": "4:00 PM ET", "venue": "BC Place, Vancouver", "tv": "FOX", "home": "W85 (Switzerland/Algeria)", "away": "W87 (Colombia/Ghana)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}]}];
+const R16_PAIRS = [{"r16venue": "Gillette Stadium, Foxborough · QF Jul 9", "matches": [{"id": "m89", "num": 89, "date": "Sat, Jul 5", "time": "5:00 PM ET", "venue": "Lincoln Financial Field, Philadelphia", "tv": "FOX", "home": "\ud83c\uddf5\ud83c\uddfe Paraguay", "away": "\ud83c\udde8\ud83c\uddeb France", "result": null, "score": null, "homeConfirmed": "PAR", "awayConfirmed": "FRA"}, {"id": "m90", "num": 90, "date": "Sat, Jul 5", "time": "1:00 PM ET", "venue": "NRG Stadium, Houston", "tv": "FOX", "home": "🇨🇦 Canada", "away": "🇲🇦 Morocco", "result": null, "score": null, "homeConfirmed": "CAN", "awayConfirmed": "MAR"}]}, {"r16venue": "MetLife Stadium, East Rutherford · QF Jul 9", "matches": [{"id": "m91", "num": 91, "date": "Sun, Jul 6", "time": "4:00 PM ET", "venue": "MetLife Stadium, East Rutherford", "tv": "FOX", "home": "\ud83c\udde7\ud83c\uddf7 Brazil", "away": "\ud83c\uddf3\ud83c\uddf4 Norway", "result": null, "score": null, "homeConfirmed": "BRA", "awayConfirmed": "NOR"}, {"id": "m92", "num": 92, "date": "Sun, Jul 6", "time": "8:00 PM ET", "venue": "Estadio Azteca, Mexico City", "tv": "FOX", "home": "\ud83c\uddf2\ud83c\uddfd Mexico", "away": "W80 (England/DR Congo)", "result": null, "score": null, "homeConfirmed": "MEX", "awayConfirmed": null}]}, {"r16venue": "AT&T Stadium, Arlington · QF Jul 10", "matches": [{"id": "m93", "num": 93, "date": "Mon, Jul 7", "time": "3:00 PM ET", "venue": "AT&T Stadium, Arlington", "tv": "FOX", "home": "W83 (Portugal/Croatia)", "away": "W84 (Spain/Austria)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}, {"id": "m94", "num": 94, "date": "Mon, Jul 7", "time": "8:00 PM ET", "venue": "Lumen Field, Seattle", "tv": "FOX", "home": "W81 (USA/Bosnia)", "away": "W82 (Belgium/Senegal)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}]}, {"r16venue": "BC Place, Vancouver · QF Jul 10", "matches": [{"id": "m95", "num": 95, "date": "Tue, Jul 8", "time": "12:00 PM ET", "venue": "Mercedes-Benz Stadium, Atlanta", "tv": "FOX", "home": "W86 (Argentina/Cape Verde)", "away": "W88 (Australia/Egypt)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}, {"id": "m96", "num": 96, "date": "Tue, Jul 8", "time": "4:00 PM ET", "venue": "BC Place, Vancouver", "tv": "FOX", "home": "W85 (Switzerland/Algeria)", "away": "W87 (Colombia/Ghana)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}]}];
 
 function buildPicksPanel(m, res) {
   const homeCode = Object.keys(KO_TEAMS).find(k => KO_TEAMS[k] === m.home);
@@ -1598,7 +1598,6 @@ function renderBracket(){
     <div class="br-nuggets">
       <div class="br-nugget">🔥 Biggest swing left: <b>Portugal vs Croatia</b> — closest split in the round (9 Portugal, 5 Croatia)</div>
       <div class="br-nugget">📊 Mexico/Ecuador and Australia/Egypt are next-closest at 10-4 splits</div>
-      <div class="br-nugget">🎲 Lone contrarian bet alive: only 1 player has <b>Sweden</b> upsetting France</div>
     </div>`;
 
   BR_PAIRS.forEach((pair, pi) => {
@@ -1769,8 +1768,8 @@ function renderPlayerDetail(){
   if(!isCompare){
     let groupMaxTotal=0, bonusMaxTotal=0;
     Object.keys(GROUPS).forEach(g=>{
-      groupMaxTotal += maxGroupPts(p1.picks[g], GROUPS[g].result, g);
-      bonusMaxTotal += maxBonusPts(p1.picks[g], GROUPS[g].result);
+      groupMaxTotal += calcGroupPts(p1.picks[g], GROUPS[g].result, g);
+      bonusMaxTotal += calcBonusPts(p1.picks[g], GROUPS[g].result);
     });
     const thirdMaxTotal = maxThirdPts(p1);
     const koMaxTotal = calcKOMaxPts(p1);
@@ -2100,7 +2099,7 @@ function renderPlayerDetail(){
 }
 
 function goPlayer(name){
-  showTab('pv',document.querySelectorAll('.tab')[3]);
+  showTab('pv',document.querySelectorAll('.tab')[4]);
   setTimeout(()=>{const sel=document.getElementById('p1-sel');if(sel){sel.value=name;renderPlayerDetail();}},50);
 }
 
