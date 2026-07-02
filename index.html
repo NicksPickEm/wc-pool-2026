@@ -260,7 +260,7 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 </head>
 <body>
 <div class="header">
-  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated July 1, 8:45 PM ET</span></div>
+  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated July 2, 12:00 PM ET</span></div>
   <div class="tabs">
     <button class="tab active" onclick="showTab('lb',this)">Leaderboard</button>
     <button class="tab" onclick="showTab('gv',this)">Groups</button>
@@ -485,7 +485,7 @@ function calcThirdPts(p){if(!p.thirds||!ADVANCING_3RD.length)return 0;return p.t
 function playerGroupPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcGroupPts(p.picks[g],GROUPS[g].result,g),0);}
 function playerBonusPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcBonusPts(p.picks[g],GROUPS[g].result),0);}
 // KO scoring
-const KO_RESULTS = {73:'away', 74:'away', 75:'away', 76:'home', 77:'home', 78:'away', 79:'home', 80:'home', 81:'home', 82:'home'};
+const KO_RESULTS = {73:'away', 74:'away', 75:'away', 76:'home', 77:'home', 78:'away', 79:'home', 80:'home', 81:'home', 82:'home', 84:'home'};
 const KO_PTS_BY_ROUND = {73:10,74:10,75:10,76:10,77:10,78:10,79:10,80:10,81:10,82:10,83:10,84:10,85:10,86:10,87:10,88:10,89:20,90:20,91:20,92:20,93:20,94:20,95:20,96:20,97:50,98:50,99:50,100:50,101:100,102:100,103:50,104:250};
 
 // Returns true if a team code has been eliminated in any played R32/R16/QF/SF match
@@ -949,9 +949,9 @@ function renderScheduleContent(){
         let centerContent;
         if(res && score){
           const [hs, as_] = score.split('-');
-          const penStr = pen ? ` (${pen} pen)` : '';
-          const aetStr = aet ? ' AET' : '';
-          centerContent = `<div class="ko-score">${hs}${aetStr}${penStr} - ${as_}</div>`;
+          const penStr = pen ? ` (pen ${pen})` : '';
+          const aetStr = aet ? ' (AET)' : '';
+          centerContent = `<div class="ko-score">${hs} - ${as_}${aetStr}${penStr}</div>`;
         } else {
           centerContent = `<div class="ko-vs">vs</div><div class="ko-meta">${m.time} <span class="ko-badge">${m.tv}</span></div>`;
         }
@@ -1496,7 +1496,7 @@ const BR_PAIRS = [
   { r16venue:'AT&T Stadium, Arlington · Jul 6',
     matches:[
       {id:'m83', num:83, date:'Thu, Jul 2', time:'7:00 PM ET', venue:'BMO Field, Toronto', tv:'FOX', home:'🇵🇹 Portugal', away:'🇭🇷 Croatia', result:null},
-      {id:'m84', num:84, date:'Thu, Jul 2', time:'3:00 PM ET', venue:'SoFi Stadium, Inglewood', tv:'FOX', home:'🇪🇸 Spain', away:'🇦🇹 Austria', result:null},
+      {id:'m84', num:84, date:'Thu, Jul 2', time:'3:00 PM ET', venue:'SoFi Stadium, Inglewood', tv:'FOX', home:'🇪🇸 Spain', away:'🇦🇹 Austria', result:'home', score:'3-0'},
     ]},
   { r16venue:'Lumen Field, Seattle · Jul 6',
     matches:[
@@ -1527,7 +1527,7 @@ const BR_PAIRS = [
 
 let brRound = 0;
 
-const R16_PAIRS = [{"r16venue": "Gillette Stadium, Foxborough · QF Jul 9", "matches": [{"id": "m89", "num": 89, "date": "Sat, Jul 5", "time": "5:00 PM ET", "venue": "Lincoln Financial Field, Philadelphia", "tv": "FOX", "home": "\ud83c\uddf5\ud83c\uddfe Paraguay", "away": "\ud83c\udde8\ud83c\uddeb France", "result": null, "score": null, "homeConfirmed": "PAR", "awayConfirmed": "FRA"}, {"id": "m90", "num": 90, "date": "Sat, Jul 5", "time": "1:00 PM ET", "venue": "NRG Stadium, Houston", "tv": "FOX", "home": "🇨🇦 Canada", "away": "🇲🇦 Morocco", "result": null, "score": null, "homeConfirmed": "CAN", "awayConfirmed": "MAR"}]}, {"r16venue": "MetLife Stadium, East Rutherford · QF Jul 9", "matches": [{"id": "m91", "num": 91, "date": "Sun, Jul 6", "time": "4:00 PM ET", "venue": "MetLife Stadium, East Rutherford", "tv": "FOX", "home": "\ud83c\udde7\ud83c\uddf7 Brazil", "away": "\ud83c\uddf3\ud83c\uddf4 Norway", "result": null, "score": null, "homeConfirmed": "BRA", "awayConfirmed": "NOR"}, {"id": "m92", "num": 92, "date": "Sun, Jul 6", "time": "8:00 PM ET", "venue": "Estadio Azteca, Mexico City", "tv": "FOX", "home": "\ud83c\uddf2\ud83c\uddfd Mexico", "away": "\ud83c\uddec\ud83c\udde7 England", "result": null, "score": null, "homeConfirmed": "MEX", "awayConfirmed": "ENG"}]}, {"r16venue": "AT&T Stadium, Arlington · QF Jul 10", "matches": [{"id": "m93", "num": 93, "date": "Mon, Jul 7", "time": "3:00 PM ET", "venue": "AT&T Stadium, Arlington", "tv": "FOX", "home": "W83 (Portugal/Croatia)", "away": "W84 (Spain/Austria)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}, {"id": "m94", "num": 94, "date": "Mon, Jul 7", "time": "8:00 PM ET", "venue": "Lumen Field, Seattle", "tv": "FOX", "home": "\ud83c\uddfa\ud83c\uddf8 USA", "away": "\ud83c\udde7\ud83c\uddea Belgium", "result": null, "score": null, "homeConfirmed": "USA", "awayConfirmed": "BEL"}]}, {"r16venue": "BC Place, Vancouver · QF Jul 10", "matches": [{"id": "m95", "num": 95, "date": "Tue, Jul 8", "time": "12:00 PM ET", "venue": "Mercedes-Benz Stadium, Atlanta", "tv": "FOX", "home": "W86 (Argentina/Cape Verde)", "away": "W88 (Australia/Egypt)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}, {"id": "m96", "num": 96, "date": "Tue, Jul 8", "time": "4:00 PM ET", "venue": "BC Place, Vancouver", "tv": "FOX", "home": "W85 (Switzerland/Algeria)", "away": "W87 (Colombia/Ghana)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}]}];
+const R16_PAIRS = [{"r16venue": "Gillette Stadium, Foxborough · QF Jul 9", "matches": [{"id": "m89", "num": 89, "date": "Sat, Jul 5", "time": "5:00 PM ET", "venue": "Lincoln Financial Field, Philadelphia", "tv": "FOX", "home": "\ud83c\uddf5\ud83c\uddfe Paraguay", "away": "\ud83c\udde8\ud83c\uddeb France", "result": null, "score": null, "homeConfirmed": "PAR", "awayConfirmed": "FRA"}, {"id": "m90", "num": 90, "date": "Sat, Jul 5", "time": "1:00 PM ET", "venue": "NRG Stadium, Houston", "tv": "FOX", "home": "🇨🇦 Canada", "away": "🇲🇦 Morocco", "result": null, "score": null, "homeConfirmed": "CAN", "awayConfirmed": "MAR"}]}, {"r16venue": "MetLife Stadium, East Rutherford · QF Jul 9", "matches": [{"id": "m91", "num": 91, "date": "Sun, Jul 6", "time": "4:00 PM ET", "venue": "MetLife Stadium, East Rutherford", "tv": "FOX", "home": "\ud83c\udde7\ud83c\uddf7 Brazil", "away": "\ud83c\uddf3\ud83c\uddf4 Norway", "result": null, "score": null, "homeConfirmed": "BRA", "awayConfirmed": "NOR"}, {"id": "m92", "num": 92, "date": "Sun, Jul 6", "time": "8:00 PM ET", "venue": "Estadio Azteca, Mexico City", "tv": "FOX", "home": "\ud83c\uddf2\ud83c\uddfd Mexico", "away": "\ud83c\uddec\ud83c\udde7 England", "result": null, "score": null, "homeConfirmed": "MEX", "awayConfirmed": "ENG"}]}, {"r16venue": "AT&T Stadium, Arlington · QF Jul 10", "matches": [{"id": "m93", "num": 93, "date": "Mon, Jul 7", "time": "3:00 PM ET", "venue": "AT&T Stadium, Arlington", "tv": "FOX", "home": "W83 (Portugal/Croatia)", "away": "\ud83c\uddea\ud83c\uddf8 Spain", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": "ESP"}, {"id": "m94", "num": 94, "date": "Mon, Jul 7", "time": "8:00 PM ET", "venue": "Lumen Field, Seattle", "tv": "FOX", "home": "\ud83c\uddfa\ud83c\uddf8 USA", "away": "\ud83c\udde7\ud83c\uddea Belgium", "result": null, "score": null, "homeConfirmed": "USA", "awayConfirmed": "BEL"}]}, {"r16venue": "BC Place, Vancouver · QF Jul 10", "matches": [{"id": "m95", "num": 95, "date": "Tue, Jul 8", "time": "12:00 PM ET", "venue": "Mercedes-Benz Stadium, Atlanta", "tv": "FOX", "home": "W86 (Argentina/Cape Verde)", "away": "W88 (Australia/Egypt)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}, {"id": "m96", "num": 96, "date": "Tue, Jul 8", "time": "4:00 PM ET", "venue": "BC Place, Vancouver", "tv": "FOX", "home": "W85 (Switzerland/Algeria)", "away": "W87 (Colombia/Ghana)", "result": null, "score": null, "homeConfirmed": null, "awayConfirmed": null}]}];
 
 function buildPicksPanel(m, res) {
   const homeCode = Object.keys(KO_TEAMS).find(k => KO_TEAMS[k] === m.home);
@@ -1644,8 +1644,8 @@ function renderBracket(){
         <div class="br-match-meta">M${m.num} · ${m.date} · ${m.time} <span class="tv-badge">${m.tv}</span></div>
         <div class="br-venue">${m.venue}</div>
         <div class="br-match-block" onclick="brToggle('${m.id}')">
-          <div class="br-team-card ${homeClass}"><span class="br-team-name">${m.home} <span class="br-expand-icon" id="bricon-${m.id}">▾</span></span><span class="br-team-pts ${homePtsClass}">${homePenTag}${homePts}</span></div>
-          <div class="br-team-card ${awayClass}"><span class="br-team-name">${m.away}</span><span class="br-team-pts ${awayPtsClass}">${awayPenTag}${awayPts}</span></div>
+          <div class="br-team-card ${homeClass}"><span class="br-team-name">${m.home} <span class="br-expand-icon" id="bricon-${m.id}">▾</span></span><span class="br-team-pts ${homePtsClass}">${homeAetTag}${homePenTag}${homePts}</span></div>
+          <div class="br-team-card ${awayClass}"><span class="br-team-name">${m.away}</span><span class="br-team-pts ${awayPtsClass}">${awayAetTag}${awayPenTag}${awayPts}</span></div>
         </div>
         <div class="br-picks-panel" id="brpanel-${m.id}">${buildPicksPanel(m, res)}</div>`;
     });
