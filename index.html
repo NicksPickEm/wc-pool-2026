@@ -260,7 +260,7 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 </head>
 <body>
 <div class="header">
-  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated July 7, 6:52 PM ET</span></div>
+  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated July 10, 9:00 AM ET</span></div>
   <div class="tabs">
     <button class="tab active" onclick="showTab('lb',this)">Leaderboard</button>
     <button class="tab" onclick="showTab('gv',this)">Groups</button>
@@ -485,7 +485,7 @@ function calcThirdPts(p){if(!p.thirds||!ADVANCING_3RD.length)return 0;return p.t
 function playerGroupPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcGroupPts(p.picks[g],GROUPS[g].result,g),0);}
 function playerBonusPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcBonusPts(p.picks[g],GROUPS[g].result),0);}
 // KO scoring
-const KO_RESULTS = {73:'away',74:'away',75:'away',76:'home',77:'home',78:'away',79:'home',80:'home',81:'home',82:'home',83:'home',84:'home',85:'home',86:'home',87:'home',88:'away',89:'away',90:'away',91:'away',92:'away',93:'away',94:'away',95:'home',96:'home'};
+const KO_RESULTS = {73:'away',74:'away',75:'away',76:'home',77:'home',78:'away',79:'home',80:'home',81:'home',82:'home',83:'home',84:'home',85:'home',86:'home',87:'home',88:'away',89:'away',90:'away',91:'away',92:'away',93:'away',94:'away',95:'home',96:'home',97:'home'};
 const KO_PTS_BY_ROUND = {73:10,74:10,75:10,76:10,77:10,78:10,79:10,80:10,81:10,82:10,83:10,84:10,85:10,86:10,87:10,88:10,89:20,90:20,91:20,92:20,93:20,94:20,95:20,96:20,97:50,98:50,99:50,100:50,101:100,102:100,103:50,104:250};
 
 // Returns true if a team code has been eliminated in any played R32/R16/QF/SF match
@@ -1536,7 +1536,7 @@ const BR_PAIRS = [
 const QF_PAIRS = [
   { sfvenue: 'QF Jul 9',
     matches: [
-      {id:'m97', num:97, date:'Wed, Jul 9', time:'4:00 PM ET', venue:'Gillette Stadium, Foxborough', tv:'FOX', home:'🇫🇷 France', away:'🇲🇦 Morocco', result:null, score:null, homeConfirmed:'FRA', awayConfirmed:'MAR'},
+      {id:'m97', num:97, date:'Wed, Jul 9', time:'4:00 PM ET', venue:'Gillette Stadium, Foxborough', tv:'FOX', home:'🇫🇷 France', away:'🇲🇦 Morocco', result:'home', score:'2-0', homeConfirmed:'FRA', awayConfirmed:'MAR'},
       {id:'m98', num:98, date:'Thu, Jul 10', time:'12:00 PM ET', venue:'SoFi Stadium, Inglewood', tv:'FOX', home:'🇪🇸 Spain', away:'🇧🇪 Belgium', result:null, score:null, homeConfirmed:'ESP', awayConfirmed:'BEL'},
     ]},
   { sfvenue: 'QF Jul 10',
