@@ -260,7 +260,7 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 </head>
 <body>
 <div class="header">
-  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated July 10, 9:00 AM ET</span></div>
+  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated July 11, 9:00 PM ET</span></div>
   <div class="tabs">
     <button class="tab active" onclick="showTab('lb',this)">Leaderboard</button>
     <button class="tab" onclick="showTab('gv',this)">Groups</button>
@@ -485,7 +485,7 @@ function calcThirdPts(p){if(!p.thirds||!ADVANCING_3RD.length)return 0;return p.t
 function playerGroupPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcGroupPts(p.picks[g],GROUPS[g].result,g),0);}
 function playerBonusPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcBonusPts(p.picks[g],GROUPS[g].result),0);}
 // KO scoring
-const KO_RESULTS = {73:'away',74:'away',75:'away',76:'home',77:'home',78:'away',79:'home',80:'home',81:'home',82:'home',83:'home',84:'home',85:'home',86:'home',87:'home',88:'away',89:'away',90:'away',91:'away',92:'away',93:'away',94:'away',95:'home',96:'home',97:'home'};
+const KO_RESULTS = {73:'away',74:'away',75:'away',76:'home',77:'home',78:'away',79:'home',80:'home',81:'home',82:'home',83:'home',84:'home',85:'home',86:'home',87:'home',88:'away',89:'away',90:'away',91:'away',92:'away',93:'away',94:'away',95:'home',96:'home',97:'home',98:'home',99:'away',100:'home'};
 const KO_PTS_BY_ROUND = {73:10,74:10,75:10,76:10,77:10,78:10,79:10,80:10,81:10,82:10,83:10,84:10,85:10,86:10,87:10,88:10,89:20,90:20,91:20,92:20,93:20,94:20,95:20,96:20,97:50,98:50,99:50,100:50,101:100,102:100,103:50,104:250};
 
 // Returns true if a team code has been eliminated in any played R32/R16/QF/SF match
@@ -511,7 +511,7 @@ const MATCH_CODES = {
   89:['PAR','FRA'], 90:['CAN','MAR'], 91:['BRA','NOR'], 92:['MEX','ENG'],
   93:['POR','ESP'], 94:['USA','BEL'], 95:['ARG','EGY'], 96:['SUI','COL'],
   97:['FRA','MAR'], 98:['ESP','BEL'], 99:['NOR','ENG'], 100:['ARG','SUI'],
-  101:['',''], 102:['',''], 103:['',''], 104:['',''],
+  101:['FRA','ESP'], 102:['ENG','ARG'], 103:['',''], 104:['',''],
 };
 
 function calcKOPts(p){
@@ -932,14 +932,20 @@ function renderScheduleContent(){
       html+=`</div>`;
     });
   } else if(scheduleMode==='knockout'){
-    const koDateOrder = ['Sun, Jun 28','Mon, Jun 29','Tue, Jun 30','Thu, Jul 1','Thu, Jul 2','Fri, Jul 3','Sat, Jul 4','Sun, Jul 5','Mon, Jul 6','Tue, Jul 7'];
+    const koDateOrder = ['Sun, Jun 28','Mon, Jun 29','Tue, Jun 30','Thu, Jul 1','Thu, Jul 2','Fri, Jul 3','Sat, Jul 4','Sun, Jul 5','Mon, Jul 6','Tue, Jul 7','Thu, Jul 9','Fri, Jul 10','Sat, Jul 11','Tue, Jul 14','Wed, Jul 15','Sat, Jul 18','Sun, Jul 19'];
     // Build a lookup from match number to BR_PAIRS match data
     const brLookup = {};
     BR_PAIRS.forEach(pair=>pair.matches.forEach(m=>{ brLookup[m.num]=m; }));
     R16_PAIRS.forEach(pair=>pair.matches.forEach(m=>{ brLookup[m.num]=m; }));
+    QF_PAIRS.forEach(pair=>pair.matches.forEach(m=>{ brLookup[m.num]=m; }));
+    SF_PAIRS.forEach(pair=>pair.matches.forEach(m=>{ brLookup[m.num]=m; }));
     const byDate = {};
     R32_SCHEDULE.forEach(m=>{ if(!byDate[m.date]) byDate[m.date]=[]; byDate[m.date].push(m); });
     R16_SCHEDULE.forEach(m=>{ if(!byDate[m.date]) byDate[m.date]=[]; byDate[m.date].push(m); });
+    QF_SCHEDULE.forEach(m=>{ if(!byDate[m.date]) byDate[m.date]=[]; byDate[m.date].push(m); });
+    SF_SCHEDULE.forEach(m=>{ if(!byDate[m.date]) byDate[m.date]=[]; byDate[m.date].push(m); });
+    THIRD_SCHEDULE.forEach(m=>{ if(!byDate[m.date]) byDate[m.date]=[]; byDate[m.date].push(m); });
+    FINAL_SCHEDULE.forEach(m=>{ if(!byDate[m.date]) byDate[m.date]=[]; byDate[m.date].push(m); });
     koDateOrder.forEach(date=>{
       if(!byDate[date]) return;
       html+=`<div class="date-label" style="margin:${html?'14px':'0'} 0 8px">${date}</div>`;
@@ -1533,16 +1539,41 @@ const BR_PAIRS = [
     ]},
 ];
 
+const SF_PAIRS = [
+  { finalvenue: 'MetLife Stadium, East Rutherford · Jul 19',
+    matches: [
+      {id:'m101', num:101, date:'Tue, Jul 14', time:'3:00 PM ET', venue:'AT&T Stadium, Dallas', tv:'FOX', home:'🇫🇷 France', away:'🇪🇸 Spain', result:null, score:null, homeConfirmed:'FRA', awayConfirmed:'ESP'},
+      {id:'m102', num:102, date:'Wed, Jul 15', time:'3:00 PM ET', venue:'Mercedes-Benz Stadium, Atlanta', tv:'FOX', home:'🇬🇧 England', away:'🇦🇷 Argentina', result:null, score:null, homeConfirmed:'ENG', awayConfirmed:'ARG'},
+    ]},
+];
+
+
+const QF_SCHEDULE = [
+  {match:97, date:'Thu, Jul 9', time:'4:00 PM ET', venue:'Gillette Stadium, Foxborough', home:'🇫🇷 France', away:'🇲🇦 Morocco', tv:'FOX'},
+  {match:98, date:'Fri, Jul 10', time:'12:00 PM ET', venue:'SoFi Stadium, Inglewood', home:'🇪🇸 Spain', away:'🇧🇪 Belgium', tv:'FOX'},
+  {match:99, date:'Sat, Jul 11', time:'5:00 PM ET', venue:'Hard Rock Stadium, Miami Gardens', home:'🇳🇴 Norway', away:'🇬🇧 England', tv:'FOX'},
+  {match:100, date:'Sat, Jul 11', time:'9:00 PM ET', venue:'Arrowhead Stadium, Kansas City', home:'🇦🇷 Argentina', away:'🇨🇭 Switzerland', tv:'FOX'},
+];
+const SF_SCHEDULE = [
+  {match:101, date:'Tue, Jul 14', time:'3:00 PM ET', venue:'AT&T Stadium, Dallas', home:'🇫🇷 France', away:'🇪🇸 Spain', tv:'FOX'},
+  {match:102, date:'Wed, Jul 15', time:'3:00 PM ET', venue:'Mercedes-Benz Stadium, Atlanta', home:'🇬🇧 England', away:'🇦🇷 Argentina', tv:'FOX'},
+];
+const THIRD_SCHEDULE = [
+  {match:103, date:'Sat, Jul 18', time:'5:00 PM ET', venue:'Hard Rock Stadium, Miami Gardens', home:'SF1 Loser', away:'SF2 Loser', tv:'FOX'},
+];
+const FINAL_SCHEDULE = [
+  {match:104, date:'Sun, Jul 19', time:'3:00 PM ET', venue:'MetLife Stadium, East Rutherford', home:'SF1 Winner', away:'SF2 Winner', tv:'FOX'},
+];
 const QF_PAIRS = [
   { sfvenue: 'QF Jul 9',
     matches: [
       {id:'m97', num:97, date:'Wed, Jul 9', time:'4:00 PM ET', venue:'Gillette Stadium, Foxborough', tv:'FOX', home:'🇫🇷 France', away:'🇲🇦 Morocco', result:'home', score:'2-0', homeConfirmed:'FRA', awayConfirmed:'MAR'},
-      {id:'m98', num:98, date:'Thu, Jul 10', time:'12:00 PM ET', venue:'SoFi Stadium, Inglewood', tv:'FOX', home:'🇪🇸 Spain', away:'🇧🇪 Belgium', result:null, score:null, homeConfirmed:'ESP', awayConfirmed:'BEL'},
+      {id:'m98', num:98, date:'Thu, Jul 10', time:'12:00 PM ET', venue:'SoFi Stadium, Inglewood', tv:'FOX', home:'🇪🇸 Spain', away:'🇧🇪 Belgium', result:'home', score:'2-1', homeConfirmed:'ESP', awayConfirmed:'BEL'},
     ]},
   { sfvenue: 'QF Jul 10',
     matches: [
-      {id:'m99', num:99, date:'Fri, Jul 11', time:'5:00 PM ET', venue:'Hard Rock Stadium, Miami Gardens', tv:'FOX', home:'🇳🇴 Norway', away:'🇬🇧 England', result:null, score:null, homeConfirmed:'NOR', awayConfirmed:'ENG'},
-      {id:'m100', num:100, date:'Fri, Jul 11', time:'8:00 PM ET', venue:'Arrowhead Stadium, Kansas City', tv:'FOX', home:'🇦🇷 Argentina', away:'🇨🇭 Switzerland', result:null, score:null, homeConfirmed:'ARG', awayConfirmed:'SUI'},
+      {id:'m99', num:99, date:'Fri, Jul 11', time:'5:00 PM ET', venue:'Hard Rock Stadium, Miami Gardens', tv:'FOX', home:'🇳🇴 Norway', away:'🇬🇧 England', result:'away', score:'1-2', aet:true, homeConfirmed:'NOR', awayConfirmed:'ENG'},
+      {id:'m100', num:100, date:'Fri, Jul 11', time:'8:00 PM ET', venue:'Arrowhead Stadium, Kansas City', tv:'FOX', home:'🇦🇷 Argentina', away:'🇨🇭 Switzerland', result:'home', score:'3-1', aet:true, homeConfirmed:'ARG', awayConfirmed:'SUI'},
     ]},
 ];
 
@@ -1797,10 +1828,79 @@ function renderBracket(){
   });
   html += `</div>`; // end QF page
 
-  // SF, Final placeholders
-  ['SF · Jul 14-15','Final · Jul 19'].forEach(r => {
-    html += `<div class="br-page"><div style="text-align:center;color:var(--muted);padding:60px 20px;font-size:13px">${r} — TBD</div></div>`;
+  // SF page
+  html += `<div class="br-page">
+    <div class="br-nuggets">
+      <div class="br-nugget">M101: <b>France vs Spain</b> · Jul 14, 3PM ET · AT&T Stadium, Dallas</div>
+      <div class="br-nugget">M102: <b>England vs Argentina</b> · Jul 15, 3PM ET · Mercedes-Benz Stadium, Atlanta</div>
+    </div>`;
+
+  SF_PAIRS.forEach((pair) => {
+    const m1h = 68, totalH = pair.matches.length * 80 + (pair.matches.length-1)*20 + pair.matches.length*24;
+    const m2h = totalH - 40;
+    const mid = Math.round((m1h + m2h) / 2);
+    html += `<div class="br-pair"><div class="br-pair-cards">`;
+    pair.matches.forEach((m, mi) => {
+      const res = m.result;
+      const scoreStr = m.score || null;
+      const homePts = scoreStr ? scoreStr.split('-')[0] : '?';
+      const awayPts = scoreStr ? scoreStr.split('-')[1] : '?';
+      const homeClass = res ? (res==='home'?'br-winner':'br-loser') : 'br-tbd';
+      const awayClass = res ? (res==='away'?'br-winner':'br-loser') : 'br-tbd';
+      const homePtsClass = res ? (res==='home'?'br-earned':'br-lost') : '';
+      const awayPtsClass = res ? (res==='away'?'br-earned':'br-lost') : '';
+      const homePenTag = (m.pen && res==='home') ? `<span class="pen-tag">PEN ${m.pen.split('-')[1]}-${m.pen.split('-')[0]}</span>` : '';
+      const awayPenTag = (m.pen && res==='away') ? `<span class="pen-tag">PEN ${m.pen.split('-')[1]}-${m.pen.split('-')[0]}</span>` : '';
+      const homeAetTag = (m.aet && res==='home') ? `<span class="pen-tag">AET</span>` : '';
+      const awayAetTag = (m.aet && res==='away') ? `<span class="pen-tag">AET</span>` : '';
+      const homeName = m.homeConfirmed ? (KO_TEAMS[m.homeConfirmed]||m.home) : m.home;
+      const awayName = m.awayConfirmed ? (KO_TEAMS[m.awayConfirmed]||m.away) : m.away;
+      if(mi>0) html += `<div class="br-match-gap"></div>`;
+      html += `
+        <div class="br-match-meta">M${m.num} · ${m.date} · ${m.time} <span class="tv-badge">${m.tv}</span></div>
+        <div class="br-venue">${m.venue}</div>
+        <div class="br-match-block" onclick="brToggle('${m.id}')">
+          <div class="br-team-card ${homeClass}"><span class="br-team-name">${homeName} <span class="br-expand-icon" id="bricon-${m.id}">▾</span></span><span class="br-team-pts ${homePtsClass}">${homeAetTag}${homePenTag}${homePts}</span></div>
+          <div class="br-team-card ${awayClass}"><span class="br-team-name">${awayName}</span><span class="br-team-pts ${awayPtsClass}">${awayAetTag}${awayPenTag}${awayPts}</span></div>
+        </div>
+        <div class="br-picks-panel" id="brpanel-${m.id}">${buildR16PicksPanel(m, res)}</div>`;
+    });
+    const svgH = totalH + 24;
+    const armColor = '#a3a8ac';
+    html += `</div>
+      <svg width="32" height="${svgH}" viewBox="0 0 32 ${svgH}">
+        <line x1="0" y1="${m1h}" x2="18" y2="${m1h}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+        <line x1="0" y1="${m2h}" x2="18" y2="${m2h}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+        <line x1="18" y1="${m1h}" x2="18" y2="${m2h}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+        <line x1="18" y1="${mid}" x2="32" y2="${mid}" stroke="${armColor}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4,3"/>
+        <circle cx="18" cy="${mid}" r="3" fill="${armColor}"/>
+      </svg>
+    </div>`;
   });
+  html += `</div>`; // end SF page
+
+  // Final page - 3rd place + Final
+  html += `<div class="br-page">
+    <div class="br-nuggets">
+      <div class="br-nugget">🥉 <b>3rd Place</b> — Jul 18, 5PM ET · Hard Rock Stadium, Miami Gardens</div>
+      <div class="br-nugget">🏆 <b>Final</b> — Jul 19, 3PM ET · MetLife Stadium, East Rutherford</div>
+    </div>
+    <div class="br-match-meta">M103 · 3rd Place Playoff · Sat, Jul 18 · 5:00 PM ET <span class="tv-badge">FOX</span></div>
+    <div class="br-venue">Hard Rock Stadium, Miami Gardens</div>
+    <div class="br-match-block" onclick="brToggle('m103')">
+      <div class="br-team-card br-tbd"><span class="br-team-name">SF1 Loser <span class="br-expand-icon" id="bricon-m103">▾</span></span><span class="br-team-pts">?</span></div>
+      <div class="br-team-card br-tbd"><span class="br-team-name">SF2 Loser</span><span class="br-team-pts">?</span></div>
+    </div>
+    <div class="br-picks-panel" id="brpanel-m103">${buildR16PicksPanel({num:103, home:'SF1 Loser', away:'SF2 Loser', homeConfirmed:null, awayConfirmed:null}, null)}</div>
+    <div class="br-match-gap"></div>
+    <div class="br-match-meta">M104 · Final · Sun, Jul 19 · 3:00 PM ET <span class="tv-badge">FOX</span></div>
+    <div class="br-venue">MetLife Stadium, East Rutherford</div>
+    <div class="br-match-block" onclick="brToggle('m104')">
+      <div class="br-team-card br-tbd"><span class="br-team-name">SF1 Winner <span class="br-expand-icon" id="bricon-m104">▾</span></span><span class="br-team-pts">?</span></div>
+      <div class="br-team-card br-tbd"><span class="br-team-name">SF2 Winner</span><span class="br-team-pts">?</span></div>
+    </div>
+    <div class="br-picks-panel" id="brpanel-m104">${buildR16PicksPanel({num:104, home:'SF1 Winner', away:'SF2 Winner', homeConfirmed:null, awayConfirmed:null}, null)}</div>
+  </div>`;
   el.innerHTML = html;
 
   // Touch swipe
@@ -1851,7 +1951,7 @@ function renderPlayerDetail(){
   const p2name=document.getElementById('p2-sel').value;
   const p3name=document.getElementById('p3-sel').value;
   const p4name=document.getElementById('p4-sel').value;
-  const p1=PLAYERS.find(p=>p.name===p1name);
+  const p1=PLAYERS.find(p=>p.name===p1name) || PLAYERS[0];
   const comparePlayers=[p1];
   [p2name,p3name,p4name].forEach(n=>{ if(n){ const p=PLAYERS.find(pl=>pl.name===n); if(p)comparePlayers.push(p); } });
   const isCompare=comparePlayers.length>1;
@@ -1970,7 +2070,7 @@ function renderPlayerDetail(){
     const anyHasKO = comparePlayers.some(p=>KO_PICKS[p.name]);
     if(anyHasKO){
       const allMatches=[];
-      [...BR_PAIRS,...R16_PAIRS,...QF_PAIRS].forEach(pair=>pair.matches.forEach(m=>allMatches.push(m)));
+      [...BR_PAIRS,...R16_PAIRS,...QF_PAIRS,...SF_PAIRS].forEach(pair=>pair.matches.forEach(m=>allMatches.push(m)));
       const roundLabels = {73:'Round of 32',89:'Round of 16',97:'Quarterfinals',101:'Semifinals',103:'3rd Place Playoff',104:'Final'};
       const roundPts = {73:10,89:20,97:50,101:100,103:50,104:250};
       const allMatchNums = new Set();
