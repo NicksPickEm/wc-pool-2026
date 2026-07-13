@@ -489,11 +489,11 @@ const KO_RESULTS = {73:'away',74:'away',75:'away',76:'home',77:'home',78:'away',
 const KO_PTS_BY_ROUND = {73:10,74:10,75:10,76:10,77:10,78:10,79:10,80:10,81:10,82:10,83:10,84:10,85:10,86:10,87:10,88:10,89:20,90:20,91:20,92:20,93:20,94:20,95:20,96:20,97:50,98:50,99:50,100:50,101:100,102:100,103:50,104:250};
 
 // Returns true if a team code has been eliminated in any played R32/R16/QF/SF match
-function isTeamEliminated(code, afterMatchNum){
+function isTeamEliminated(code, beforeMatchNum){
   if(!code) return false;
   return Object.keys(KO_RESULTS).some(mNum=>{
     const num = parseInt(mNum);
-    if(afterMatchNum && num <= afterMatchNum) return false; // only check later rounds
+    if(beforeMatchNum && num >= beforeMatchNum) return false; // only check earlier rounds
     const result=KO_RESULTS[num];
     const codes=MATCH_CODES[num];
     if(!codes||!result) return false;
