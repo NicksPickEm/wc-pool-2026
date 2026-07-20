@@ -260,7 +260,7 @@ select { width: 100%; background: var(--surface); border: 1px solid var(--border
 </head>
 <body>
 <div class="header">
-  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated July 15, 5:30 PM ET</span></div>
+  <div class="header-top"><h1>⚽ WC Pool 2026</h1><span>Updated July 19, 5:00 PM ET</span></div>
   <div class="tabs">
     <button class="tab active" onclick="showTab('lb',this)">Leaderboard</button>
     <button class="tab" onclick="showTab('gv',this)">Groups</button>
@@ -485,7 +485,7 @@ function calcThirdPts(p){if(!p.thirds||!ADVANCING_3RD.length)return 0;return p.t
 function playerGroupPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcGroupPts(p.picks[g],GROUPS[g].result,g),0);}
 function playerBonusPts(p){return Object.keys(GROUPS).reduce((s,g)=>s+calcBonusPts(p.picks[g],GROUPS[g].result),0);}
 // KO scoring
-const KO_RESULTS = {73:'away',74:'away',75:'away',76:'home',77:'home',78:'away',79:'home',80:'home',81:'home',82:'home',83:'home',84:'home',85:'home',86:'home',87:'home',88:'away',89:'away',90:'away',91:'away',92:'away',93:'away',94:'away',95:'home',96:'home',97:'home',98:'home',99:'away',100:'home',101:'away',102:'away'};
+const KO_RESULTS = {73:'away',74:'away',75:'away',76:'home',77:'home',78:'away',79:'home',80:'home',81:'home',82:'home',83:'home',84:'home',85:'home',86:'home',87:'home',88:'away',89:'away',90:'away',91:'away',92:'away',93:'away',94:'away',95:'home',96:'home',97:'home',98:'home',99:'away',100:'home',101:'away',102:'away',103:'away',104:'home'};
 const KO_PTS_BY_ROUND = {73:10,74:10,75:10,76:10,77:10,78:10,79:10,80:10,81:10,82:10,83:10,84:10,85:10,86:10,87:10,88:10,89:20,90:20,91:20,92:20,93:20,94:20,95:20,96:20,97:50,98:50,99:50,100:50,101:100,102:100,103:50,104:250};
 
 // Returns true if a team code has been eliminated in any played R32/R16/QF/SF match
@@ -989,7 +989,7 @@ const KO_PICKS = {
     76: 'BRA',
     77: 'FRA',
     78: 'NOR',
-    79: 'ECU',
+    79: 'MEX',
     80: 'ENG',
     81: 'USA',
     82: 'BEL',
@@ -1000,7 +1000,7 @@ const KO_PICKS = {
     87: 'COL',
     88: 'EGY',
     89: 'FRA',
-    90: 'NED',
+    90: 'CAN',
     91: 'BRA',
     92: 'ENG',
     93: 'POR',
@@ -1009,11 +1009,11 @@ const KO_PICKS = {
     96: 'COL',
     97: 'FRA',
     98: 'POR',
-    99: 'BRA',
+    99: 'NOR',
     100: 'ARG',
     101: 'FRA',
     102: 'ARG',
-    103: 'POR',
+    103: 'COL',
     104: 'FRA',
   },
   'Chongo': {
@@ -1035,7 +1035,7 @@ const KO_PICKS = {
     88: 'EGY',
     89: 'FRA',
     90: 'MAR',
-    91: 'NOR',
+    91: 'BRA',
     92: 'MEX',
     93: 'ESP',
     94: 'USA',
@@ -1044,10 +1044,10 @@ const KO_PICKS = {
     97: 'FRA',
     98: 'ESP',
     99: 'NOR',
-    100: 'COL',
+    100: 'ARG',
     101: 'FRA',
-    102: 'NOR',
-    103: 'COL',
+    102: 'ARG',
+    103: 'NOR',
     104: 'FRA',
   },
   'Christian': {
@@ -1145,11 +1145,11 @@ const KO_PICKS = {
     96: 'COL',
     97: 'FRA',
     98: 'USA',
-    99: 'BRA',
+    99: 'ENG',
     100: 'COL',
     101: 'FRA',
-    102: 'COL',
-    103: 'USA',
+    102: 'ENG',
+    103: 'ESP',
     104: 'FRA',
   },
   'Jon K.': {
@@ -1183,14 +1183,14 @@ const KO_PICKS = {
     100: 'ARG',
     101: 'ESP',
     102: 'BRA',
-    103: 'ARG',
+    103: 'BRA',
     104: 'ESP',
   },
   'Josh': {
     73: 'CAN',
     74: 'GER',
     75: 'NED',
-    76: 'JPN',
+    76: 'BRA',
     77: 'FRA',
     78: 'NOR',
     79: 'MEX',
@@ -1208,7 +1208,7 @@ const KO_PICKS = {
     91: 'NOR',
     92: 'ENG',
     93: 'ESP',
-    94: 'BEL',
+    94: 'USA',
     95: 'ARG',
     96: 'COL',
     97: 'FRA',
@@ -1217,7 +1217,7 @@ const KO_PICKS = {
     100: 'ARG',
     101: 'FRA',
     102: 'ARG',
-    103: 'ESP',
+    103: 'ENG',
     104: 'FRA',
   },
   'Julian': {
@@ -1267,7 +1267,7 @@ const KO_PICKS = {
     82: 'BEL',
     83: 'POR',
     84: 'ESP',
-    85: 'ALG',
+    85: 'SUI',
     86: 'ARG',
     87: 'COL',
     88: 'AUS',
@@ -1285,11 +1285,11 @@ const KO_PICKS = {
     100: 'ARG',
     101: 'ESP',
     102: 'ARG',
-    103: 'GER',
+    103: 'ENG',
     104: 'ESP',
   },
   'Madigan': {
-    73: 'CAN',
+    73: 'RSA',
     74: 'GER',
     75: 'NED',
     76: 'BRA',
@@ -1308,18 +1308,18 @@ const KO_PICKS = {
     89: 'GER',
     90: 'NED',
     91: 'BRA',
-    92: 'ENG',
+    92: 'MEX',
     93: 'ESP',
     94: 'USA',
     95: 'ARG',
-    96: 'SUI',
+    96: 'COL',
     97: 'GER',
     98: 'ESP',
-    99: 'BRA',
+    99: 'GER',
     100: 'SUI',
-    101: 'GER',
-    102: 'BRA',
-    103: 'SUI',
+    101: 'ESP',
+    102: 'ARG',
+    103: 'GER',
     104: 'BRA',
   },
   'Matt B.': {
@@ -1419,9 +1419,9 @@ const KO_PICKS = {
     98: 'ESP',
     99: 'NOR',
     100: 'ARG',
-    101: 'FRA',
+    101: 'ESP',
     102: 'ARG',
-    103: 'ESP',
+    103: 'NOR',
     104: 'FRA',
   },
   'Suarez': {
@@ -1882,25 +1882,25 @@ function renderBracket(){
   // Final page - 3rd place + Final
   html += `<div class="br-page">
     <div class="br-nuggets">
-      <div class="br-nugget">🏆 <b>Spain wins Final</b>: Kek wins the pool (922 or 972 pts depending on 3rd place)</div>
-      <div class="br-nugget">🏆 <b>Argentina wins Final</b>: Christian wins the pool (994 or 1044 pts)</div>
-      <div class="br-nugget">🥉 3rd place: <b>France wins</b> → adds 50pts for anyone who picked France · <b>England wins</b> → 50pts for those who picked England</div>
+      <div class="br-nugget">🏆 <b>Spain wins the 2026 World Cup</b> 1-0 AET vs Argentina</div>
+      <div class="br-nugget">🥉 <b>England wins 3rd place</b> 6-4 vs France</div>
+      <div class="br-nugget">🎉 <b>Kek wins the pool</b> — the only player who picked Spain as World Cup champion</div>
     </div>
     <div class="br-match-meta">M103 · 3rd Place Playoff · Sat, Jul 18 · 5:00 PM ET <span class="tv-badge">FOX</span></div>
     <div class="br-venue">Hard Rock Stadium, Miami Gardens</div>
     <div class="br-match-block" onclick="brToggle('m103')">
-      <div class="br-team-card br-tbd"><span class="br-team-name">🇫🇷 France <span class="br-expand-icon" id="bricon-m103">▾</span></span><span class="br-team-pts">?</span></div>
-      <div class="br-team-card br-tbd"><span class="br-team-name">🇬🇧 England</span><span class="br-team-pts">?</span></div>
+      <div class="br-team-card br-loser"><span class="br-team-name">🇫🇷 France <span class="br-expand-icon" id="bricon-m103">▾</span></span><span class="br-team-pts br-lost">4</span></div>
+      <div class="br-team-card br-winner"><span class="br-team-name">🇬🇧 England</span><span class="br-team-pts br-earned">6</span></div>
     </div>
-    <div class="br-picks-panel" id="brpanel-m103">${buildR16PicksPanel({num:103, home:'🇫🇷 France', away:'🇬🇧 England', homeConfirmed:'FRA', awayConfirmed:'ENG'}, null)}</div>
+    <div class="br-picks-panel" id="brpanel-m103">${buildR16PicksPanel({num:103, home:'🇫🇷 France', away:'🇬🇧 England', homeConfirmed:'FRA', awayConfirmed:'ENG'}, 'away')}</div>
     <div class="br-match-gap"></div>
     <div class="br-match-meta">M104 · Final · Sun, Jul 19 · 3:00 PM ET <span class="tv-badge">FOX</span></div>
     <div class="br-venue">MetLife Stadium, East Rutherford</div>
     <div class="br-match-block" onclick="brToggle('m104')">
-      <div class="br-team-card br-tbd"><span class="br-team-name">🇪🇸 Spain <span class="br-expand-icon" id="bricon-m104">▾</span></span><span class="br-team-pts">?</span></div>
-      <div class="br-team-card br-tbd"><span class="br-team-name">🇦🇷 Argentina</span><span class="br-team-pts">?</span></div>
+      <div class="br-team-card br-winner"><span class="br-team-name">🇪🇸 Spain <span class="br-expand-icon" id="bricon-m104">▾</span></span><span class="br-team-pts br-earned"><span class="pen-tag">AET</span>1</span></div>
+      <div class="br-team-card br-loser"><span class="br-team-name">🇦🇷 Argentina</span><span class="br-team-pts br-lost">0</span></div>
     </div>
-    <div class="br-picks-panel" id="brpanel-m104">${buildR16PicksPanel({num:104, home:'🇪🇸 Spain', away:'🇦🇷 Argentina', homeConfirmed:'ESP', awayConfirmed:'ARG'}, null)}</div>
+    <div class="br-picks-panel" id="brpanel-m104">${buildR16PicksPanel({num:104, home:'🇪🇸 Spain', away:'🇦🇷 Argentina', homeConfirmed:'ESP', awayConfirmed:'ARG'}, 'home')}</div>
   </div>`;
   el.innerHTML = html;
 
